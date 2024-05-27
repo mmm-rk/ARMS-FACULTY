@@ -1,10 +1,11 @@
+import 'package:arms/Screens/Class_dartfiles/class_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
+import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
 import 'package:arms/Screens/Widgets/file_upload.dart';
 import 'package:arms/Screens/Widgets/ldp_clicked_save.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
-import 'package:arms/Screens/class_page.dart';
 import 'package:arms/Screens/home_page.dart';
-import 'package:arms/Screens/question_bank.dart';
+import 'package:arms/Screens/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class ClickedCreate extends StatefulWidget {
@@ -15,7 +16,7 @@ class ClickedCreate extends StatefulWidget {
 }
 
 class _ClickedCreateState extends State<ClickedCreate> {
-  String _subjectTitle = '';
+  String _subjectTitle = 'Sample Subject';
   DateTime? _selectedDate;
 
   @override
@@ -144,7 +145,8 @@ class _ClickedCreateState extends State<ClickedCreate> {
                         ],
                       ),
                       SizedBox(height: 20),
-                      ClickedSave(),
+                      ClickedSave(
+                          subjectTitle: _subjectTitle, date: _selectedDate),
                       SizedBox(height: 20),
                       Container(
                         margin: EdgeInsets.only(top: 10),
@@ -232,7 +234,15 @@ class _ClickedCreateState extends State<ClickedCreate> {
                   SizedBox(height: 18),
                   IconButton(
                     icon: Icon(Icons.settings),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return const SettingPage();
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

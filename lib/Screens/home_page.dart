@@ -1,8 +1,8 @@
+import 'package:arms/Screens/Class_dartfiles/class_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
+import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
-import 'package:arms/Screens/class_page.dart';
-import 'package:arms/Screens/question_bank.dart';
-import 'package:arms/Screens/setting.dart';
+import 'package:arms/Screens/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

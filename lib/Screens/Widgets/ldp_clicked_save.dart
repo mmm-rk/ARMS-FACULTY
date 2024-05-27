@@ -2,7 +2,11 @@ import 'package:arms/Screens/Popups/ldp_newtopic.dart';
 import 'package:flutter/material.dart';
 
 class ClickedSave extends StatefulWidget {
-  const ClickedSave({super.key});
+  final String subjectTitle;
+  final DateTime? date;
+
+  const ClickedSave(
+      {super.key, required this.subjectTitle, required this.date});
 
   @override
   State<ClickedSave> createState() => _ClickedSaveState();
@@ -24,6 +28,9 @@ class _ClickedSaveState extends State<ClickedSave> {
               onPressed: () {
                 setState(() {
                   isSaveClicked = true;
+                  print(
+                      "Subject Title: ${widget.subjectTitle}"); //VALUE CHECKER
+                  print("Date: ${widget.date}");
                   isButtonEnabled = true;
                 });
               },

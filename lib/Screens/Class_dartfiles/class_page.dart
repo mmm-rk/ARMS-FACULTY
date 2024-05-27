@@ -1,12 +1,12 @@
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
+import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
-import 'package:arms/Screens/class_page.dart';
 import 'package:arms/Screens/home_page.dart';
-import 'package:arms/Screens/setting.dart';
+import 'package:arms/Screens/settings_page.dart';
 import 'package:flutter/material.dart';
 
-class QuestionPage extends StatelessWidget {
-  const QuestionPage({super.key});
+class ClassPage extends StatelessWidget {
+  const ClassPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class QuestionPage extends StatelessWidget {
       body: Stack(
         children: [
           Center(
-            child: Text('QUESTION BANK'), // Add your main content here
+            child: Text('CLASS PAGE'), // Add your main content here
           ),
           GestureDetector(
             onTap: () {
@@ -88,7 +88,7 @@ class QuestionPage extends StatelessWidget {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return const LdpPage();
+                            return LdpPage();
                           },
                         ),
                       );
@@ -97,20 +97,20 @@ class QuestionPage extends StatelessWidget {
                   SizedBox(height: 18),
                   IconButton(
                     icon: Icon(Icons.account_balance_wallet_rounded),
-                    onPressed: () {},
-                  ),
-                  SizedBox(height: 18),
-                  IconButton(
-                    icon: Icon(Icons.people),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return const ClassPage();
+                            return const QuestionPage();
                           },
                         ),
                       );
                     },
+                  ),
+                  SizedBox(height: 18),
+                  IconButton(
+                    icon: Icon(Icons.people),
+                    onPressed: () {},
                   ),
                   SizedBox(height: 18),
                   IconButton(

@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
 
-class AddNewTopic extends StatelessWidget {
+class AddNewTopic extends StatefulWidget {
   const AddNewTopic({super.key});
+
+  @override
+  _AddNewTopicState createState() => _AddNewTopicState();
+}
+
+class _AddNewTopicState extends State<AddNewTopic> {
+  final TextEditingController _textEditingController = TextEditingController();
+  String _topicTitle = '';
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +53,18 @@ class AddNewTopic extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: TextField(
+                    controller: _textEditingController,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                     ),
                     style: TextStyle(
-                      fontSize: 18, // Adjust the font size here
+                      fontSize: 18,
                     ),
-                    //maxLength: 100,
+                    onChanged: (value) {
+                      setState(() {
+                        _topicTitle = value;
+                      });
+                    },
                   ),
                 ),
               ),
@@ -58,18 +77,17 @@ class AddNewTopic extends StatelessWidget {
                 decoration: ShapeDecoration(
                   shape: RoundedRectangleBorder(
                     side: BorderSide(
-                      width: 0, // Set width to 0 to remove the border
+                      width: 0,
                       color: Color.fromARGB(255, 255, 255, 255),
                     ),
                   ),
                 ),
                 child: Row(
                   children: [
-                    Spacer(), // Push buttons to the right
+                    Spacer(),
                     TextButton(
                       onPressed: () {
-                        // Add cancel button logic
-                        Navigator.pop(context); // Close the dialog
+                        Navigator.pop(context);
                       },
                       child: Text(
                         'Cancel',
@@ -83,7 +101,10 @@ class AddNewTopic extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        // Add add button logic
+                        if (_topicTitle.isNotEmpty) {
+                          print(Text(_topicTitle)); //VALUE CHECKER
+                          Navigator.pop(context);
+                        }
                       },
                       child: Text(
                         'Add',
