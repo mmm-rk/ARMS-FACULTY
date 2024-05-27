@@ -1,8 +1,8 @@
 import 'package:arms/Screens/Class_dartfiles/class_page.dart';
+import 'package:arms/Screens/LDP_dartfiles/ldp_clicked_save.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
 import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
 import 'package:arms/Screens/Widgets/file_upload.dart';
-import 'package:arms/Screens/Widgets/ldp_clicked_save.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
 import 'package:arms/Screens/settings_page.dart';
@@ -148,15 +148,6 @@ class _ClickedCreateState extends State<ClickedCreate> {
                       ClickedSave(
                           subjectTitle: _subjectTitle, date: _selectedDate),
                       SizedBox(height: 20),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Divider(
-                          color: Color.fromRGBO(65, 95, 76, 1),
-                          height: 3,
-                          thickness: 3,
-                        ),
-                      ),
-                      SizedBox(height: 20), // Add some space below the Divider
                     ],
                   ),
                 ],

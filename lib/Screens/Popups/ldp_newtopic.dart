@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AddNewTopic extends StatefulWidget {
-  const AddNewTopic({super.key});
+class NewTopicPopup extends StatefulWidget {
+  const NewTopicPopup({super.key});
 
   @override
-  _AddNewTopicState createState() => _AddNewTopicState();
+  _NewTopicPopupState createState() => _NewTopicPopupState();
 }
 
-class _AddNewTopicState extends State<AddNewTopic> {
+class _NewTopicPopupState extends State<NewTopicPopup> {
   final TextEditingController _textEditingController = TextEditingController();
   String _topicTitle = '';
 

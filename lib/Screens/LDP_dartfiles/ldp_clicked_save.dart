@@ -1,4 +1,5 @@
 import 'package:arms/Screens/Popups/ldp_newtopic.dart';
+import 'package:arms/Screens/Tables/topics_table.dart';
 import 'package:flutter/material.dart';
 
 class ClickedSave extends StatefulWidget {
@@ -29,7 +30,7 @@ class _ClickedSaveState extends State<ClickedSave> {
                 setState(() {
                   isSaveClicked = true;
                   print(
-                      "Subject Title: ${widget.subjectTitle}"); //VALUE CHECKER
+                      "Subject Title: ${widget.subjectTitle}"); // VALUE CHECKER
                   print("Date: ${widget.date}");
                   isButtonEnabled = true;
                 });
@@ -57,7 +58,7 @@ class _ClickedSaveState extends State<ClickedSave> {
                           context: context,
                           barrierDismissible: false,
                           builder: (BuildContext context) {
-                            return AddNewTopic();
+                            return NewTopicPopup();
                           });
                     }
                   : null,
@@ -78,6 +79,25 @@ class _ClickedSaveState extends State<ClickedSave> {
               ),
             ),
           ],
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 10),
+          child: Divider(
+            color: Color.fromRGBO(65, 95, 76, 1),
+            height: 3,
+            thickness: 3,
+          ),
+        ),
+        Positioned(
+          child: Container(
+            width: 800, // Set the desired width
+            height: 160, // Set the desired height
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.green),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: TopicTable(),
+          ),
         ),
       ],
     );

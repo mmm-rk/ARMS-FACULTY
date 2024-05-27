@@ -1,6 +1,5 @@
 import 'package:arms/Screens/Class_dartfiles/class_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
-import 'package:arms/Screens/Question_dartfiles/questions_clicked_add.dart';
 import 'package:arms/Screens/Tables/questions_table.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
@@ -147,13 +146,13 @@ class QuestionPage extends StatelessWidget {
                       SizedBox(width: 8),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return AddQuestion();
-                              },
-                            ),
-                          );
+                          // Navigator.of(context).pushReplacement(
+                          //   MaterialPageRoute(
+                          //     builder: (BuildContext context) {
+                          //       return AddQuestion();
+                          //     },
+                          //   ),
+                          // );
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Color.fromRGBO(
