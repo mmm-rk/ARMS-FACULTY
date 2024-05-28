@@ -62,7 +62,7 @@ class _ClickedCreateState extends State<ClickedCreate> {
             padding: EdgeInsets.fromLTRB(160, 30, 50, 0),
             child: Container(
               width: 800,
-              height: 500,
+              height: 1600,
               child: Stack(
                 children: [
                   Column(

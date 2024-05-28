@@ -48,8 +48,8 @@ class _UploadExcelFileState extends State<UploadExcelFile> {
           _pickExcelFile();
         },
         style: ElevatedButton.styleFrom(
-          primary: Color(0xFFDDF7E6),
-          onPrimary: Colors.black,
+          foregroundColor: Colors.black,
+          backgroundColor: Color(0xFFDDF7E6),
           elevation: 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

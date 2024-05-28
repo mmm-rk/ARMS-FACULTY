@@ -68,13 +68,13 @@ class ApprovalPopup extends StatelessWidget {
             ),
             Positioned(
               left: 606,
-              top: 200,
+              top: 185,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFFF0000),
+                  backgroundColor: Color(0xFFFF0000),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                     side: BorderSide(width: 1, color: Color(0xFFFF0000)),
@@ -93,13 +93,13 @@ class ApprovalPopup extends StatelessWidget {
             ),
             Positioned(
               left: 738,
-              top: 200,
+              top: 185,
               child: ElevatedButton(
                 onPressed: () {
                   // Implement your continue logic here
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
+                  backgroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                     side: BorderSide(width: 1),

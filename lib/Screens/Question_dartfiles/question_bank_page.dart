@@ -1,5 +1,6 @@
 import 'package:arms/Screens/Class_dartfiles/class_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
+import 'package:arms/Screens/Question_dartfiles/add_question.dart';
 import 'package:arms/Screens/Tables/questions_table.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
@@ -130,7 +131,8 @@ class QuestionPage extends StatelessWidget {
                               top: 54,
                               child: Container(
                                   // Define your table container properties here
-                                  child: QuestionTable()),
+                                  child:
+                                      QuestionTable()), //Edit mo nalang sa pag display data
                             ),
                           ],
                         ),
@@ -146,16 +148,16 @@ class QuestionPage extends StatelessWidget {
                       SizedBox(width: 8),
                       ElevatedButton(
                         onPressed: () {
-                          // Navigator.of(context).pushReplacement(
-                          //   MaterialPageRoute(
-                          //     builder: (BuildContext context) {
-                          //       return AddQuestion();
-                          //     },
-                          //   ),
-                          // );
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return const AddQuestion();
+                              },
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromRGBO(
+                          backgroundColor: Color.fromRGBO(
                               65, 95, 76, 1), // Set the background color
                         ),
                         child: Row(
@@ -176,7 +178,7 @@ class QuestionPage extends StatelessWidget {
                           // Action for edit button
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromRGBO(
+                          backgroundColor: Color.fromRGBO(
                               65, 95, 76, 1), // Set the background color
                         ),
                         child: Row(
@@ -200,7 +202,7 @@ class QuestionPage extends StatelessWidget {
                           // Action for delete button
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color.fromRGBO(
+                          backgroundColor: Color.fromRGBO(
                               197, 55, 55, 1), // Set the background color
                         ),
                         child: Row(

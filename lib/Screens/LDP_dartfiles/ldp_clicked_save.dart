@@ -1,5 +1,5 @@
+import 'package:arms/Screens/LDP_dartfiles/expansion_panel.dart';
 import 'package:arms/Screens/Popups/ldp_newtopic.dart';
-import 'package:arms/Screens/Tables/topics_table.dart';
 import 'package:flutter/material.dart';
 
 class ClickedSave extends StatefulWidget {
@@ -16,6 +16,7 @@ class ClickedSave extends StatefulWidget {
 class _ClickedSaveState extends State<ClickedSave> {
   bool isSaveClicked = false;
   bool isButtonEnabled = false;
+  bool isExpansionVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class _ClickedSaveState extends State<ClickedSave> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                primary:
+                backgroundColor:
                     Color.fromRGBO(65, 95, 76, 1), // Set the background color
               ),
               child: Row(
@@ -55,15 +56,20 @@ class _ClickedSaveState extends State<ClickedSave> {
               onPressed: isButtonEnabled
                   ? () {
                       showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return NewTopicPopup();
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return NewTopicPopup(onConfirm: () {
+                            setState(() {
+                              isExpansionVisible = true; // Set visibility flag
+                            });
                           });
+                        },
+                      );
                     }
                   : null,
               style: ElevatedButton.styleFrom(
-                primary:
+                backgroundColor:
                     Color.fromRGBO(65, 95, 76, 1), // Set the background color
               ),
               child: Row(
@@ -88,17 +94,16 @@ class _ClickedSaveState extends State<ClickedSave> {
             thickness: 3,
           ),
         ),
-        Positioned(
-          child: Container(
+        if (isExpansionVisible) // Only show ExpansionPanels if flag is true
+          Container(
             width: 800, // Set the desired width
-            height: 160, // Set the desired height
+            height: 450, // Set the desired height
             decoration: BoxDecoration(
               border: Border.all(color: Colors.green),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: TopicTable(),
+            child: ExpansionPanels(),
           ),
-        ),
       ],
     );
   }

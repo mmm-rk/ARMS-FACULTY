@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class NewTopicPopup extends StatefulWidget {
-  const NewTopicPopup({super.key});
+  final VoidCallback? onConfirm;
+  final VoidCallback? onCancel;
+
+  NewTopicPopup({this.onConfirm, this.onCancel});
 
   @override
   _NewTopicPopupState createState() => _NewTopicPopupState();
@@ -87,6 +90,9 @@ class _NewTopicPopupState extends State<NewTopicPopup> {
                     Spacer(),
                     TextButton(
                       onPressed: () {
+                        if (widget.onCancel != null) {
+                          widget.onCancel!();
+                        }
                         Navigator.pop(context);
                       },
                       child: Text(
@@ -103,6 +109,10 @@ class _NewTopicPopupState extends State<NewTopicPopup> {
                       onPressed: () {
                         if (_topicTitle.isNotEmpty) {
                           print(Text(_topicTitle)); //VALUE CHECKER
+                          if (widget.onConfirm != null) {
+                            widget.onConfirm!();
+                          }
+                          //_addNewTopic(_topicTitle); dae ko macall baga ni
                           Navigator.pop(context);
                         }
                       },
