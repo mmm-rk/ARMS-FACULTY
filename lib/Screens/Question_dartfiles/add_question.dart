@@ -1,7 +1,7 @@
 import 'package:arms/Screens/Class_dartfiles/class_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
+import 'package:arms/Screens/Question_dartfiles/addquestion_details.dart';
 import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
-import 'package:arms/Screens/Question_dartfiles/question_details.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
 import 'package:arms/Screens/settings_page.dart';
@@ -135,8 +135,8 @@ class _AddQuestionState extends State<AddQuestion> {
                               top: 54,
                               child: Container(
                                   // Define your table container properties here
-                                  child:
-                                      QuestionDetails()), //Edit mo nalang sa pag display data
+                                  child: AddQuestionDetails
+                                      .AddQuestionDetails()), //Edit mo nalang sa pag display data
                             ),
                           ],
                         ),

@@ -68,7 +68,7 @@ class ApprovalPopup extends StatelessWidget {
             ),
             Positioned(
               left: 606,
-              top: 185,
+              top: 170,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
@@ -93,7 +93,7 @@ class ApprovalPopup extends StatelessWidget {
             ),
             Positioned(
               left: 738,
-              top: 185,
+              top: 170,
               child: ElevatedButton(
                 onPressed: () {
                   // Implement your continue logic here

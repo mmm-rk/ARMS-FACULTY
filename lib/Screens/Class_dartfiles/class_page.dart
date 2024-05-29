@@ -1,5 +1,7 @@
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
+import 'package:arms/Screens/Popups/create_assessment_dialog.dart';
 import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
+import 'package:arms/Screens/Tables/assessments_table.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
 import 'package:arms/Screens/settings_page.dart';
@@ -48,7 +50,180 @@ class ClassPage extends StatelessWidget {
       body: Stack(
         children: [
           Center(
-            child: Text('CLASS PAGE'), // Add your main content here
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.fromLTRB(93, 0, 36, 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                        width: 2300,
+                        height: 620,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              child: Container(
+                                width: 2300,
+                                height: 620,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(208, 217, 211, 1),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0x3F000000),
+                                      blurRadius: 4,
+                                      offset: Offset(2, 2),
+                                      spreadRadius: 2,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              child: Container(
+                                width: 2300,
+                                height: 54,
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                      left: 0,
+                                      top: 0,
+                                      child: Container(
+                                        width: 2300,
+                                        height: 54,
+                                        decoration: BoxDecoration(
+                                            color:
+                                                Color.fromRGBO(65, 95, 76, 1)),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      left: 21,
+                                      top: 11,
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.article_outlined,
+                                              color: Colors.white,
+                                            ),
+                                            SizedBox(width: 8),
+                                            Text(
+                                              'List of Assessments',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.w700,
+                                                height: 0,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 54,
+                              child: Container(
+                                  // Define your table container properties here
+                                  child:
+                                      AssessmentTable()), //Edit mo nalang sa pag display data
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(60, 0, 0, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AssessmentDialog();
+                              });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(
+                              65, 95, 76, 1), // Set the background color
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.add, color: Colors.white),
+                            SizedBox(width: 8),
+                            Text(
+                              'CREATE',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Action for edit button
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(
+                              65, 95, 76, 1), // Set the background color
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.edit,
+                                color:
+                                    Colors.white), // Add icon before the text
+                            SizedBox(
+                                width: 8), // Add space between icon and text
+                            Text(
+                              'EDIT',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Action for post button
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(
+                              65, 95, 76, 1), // Set the background color
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.upload,
+                                color:
+                                    Colors.white), // Add icon before the text
+                            SizedBox(
+                                width: 8), // Add space between icon and text
+                            Text(
+                              'POST',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 40)
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           GestureDetector(
             onTap: () {
@@ -88,7 +263,7 @@ class ClassPage extends StatelessWidget {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return LdpPage();
+                            return const LdpPage();
                           },
                         ),
                       );

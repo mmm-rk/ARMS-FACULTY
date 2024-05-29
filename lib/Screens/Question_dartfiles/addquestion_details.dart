@@ -3,28 +3,24 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class QuestionDetails extends StatefulWidget {
-  const QuestionDetails({Key? key}) : super(key: key);
+class AddQuestionDetails extends StatefulWidget {
+  const AddQuestionDetails.AddQuestionDetails({Key? key}) : super(key: key);
 
   @override
-  State<QuestionDetails> createState() => _QuestionDetailsState();
+  State<AddQuestionDetails> createState() => _AddQuestionDetailsState();
 }
 
-class _QuestionDetailsState extends State<QuestionDetails> {
+class _AddQuestionDetailsState extends State<AddQuestionDetails> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _topicController = TextEditingController();
   final TextEditingController _questionController = TextEditingController();
+  final TextEditingController _newTagController = TextEditingController();
   final List<TextEditingController> _optionControllers =
       List.generate(4, (_) => TextEditingController());
   int _correctAnswerIndex = 0;
   String _selectedDifficulty = 'Easy';
   List<String> _tags = [];
-  final List<String> _predefinedTags = [
-    'Math',
-    'Science',
-    'History',
-    'Geography'
-  ];
+  final List<String> _predefinedTags = ['Taxation'];
 
   Future<void> _saveQuestion() async {
     if (_formKey.currentState!.validate()) {
@@ -34,7 +30,7 @@ class _QuestionDetailsState extends State<QuestionDetails> {
         'options':
             _optionControllers.map((controller) => controller.text).toList(),
         'correctAnswerIndex': _correctAnswerIndex,
-        'tags': _tags,
+        'tags': _tags.toList(),
         'difficulty': _selectedDifficulty,
       };
 
@@ -89,7 +85,7 @@ class _QuestionDetailsState extends State<QuestionDetails> {
               top: 38,
               child: Container(
                 width: 500,
-                height: 42,
+                height: 50,
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 9),
                 decoration: ShapeDecoration(
                   color: Color(0xFFE9F3ED),
@@ -98,22 +94,45 @@ class _QuestionDetailsState extends State<QuestionDetails> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                child: TextField(
-                  controller: _topicController,
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 10),
-                    border: InputBorder.none,
-                    hintText: 'Enter the Topic it Covers',
-                    hintStyle: TextStyle(
-                      color: Color(0xFF808080),
-                      fontSize: 15,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w400,
+                child: Wrap(
+                  spacing: 8,
+                  children: [
+                    ..._predefinedTags.map((tag) {
+                      return Chip(
+                        label: Text(
+                          tag,
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                        onDeleted: () {
+                          setState(() {
+                            _predefinedTags.remove(tag);
+                          });
+                        },
+                      );
+                    }).toList(),
+                    // Input field for adding new chips
+                    Container(
+                      width: 120, // Adjust the width as needed
+                      child: TextField(
+                        controller: _newTagController,
+                        onSubmitted: (value) {
+                          setState(() {
+                            _predefinedTags
+                                .add(value); // Add the new tag to the list
+                            _newTagController.clear(); // Clear the text field
+                          });
+                        },
+                        style: TextStyle(
+                          fontSize: 15, // Adjust the font size as needed
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Add Tag',
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),
@@ -137,7 +156,7 @@ class _QuestionDetailsState extends State<QuestionDetails> {
               top: 38,
               child: Container(
                 width: 299,
-                height: 42,
+                height: 50,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
                 decoration: ShapeDecoration(

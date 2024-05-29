@@ -63,26 +63,31 @@ class _QuestionTableState extends State<QuestionTable> {
         ),
       ],
       rows: _questionDataList.map((questionData) {
-        return DataRow(cells: [
-          DataCell(
-            Text(
-              questionData.question,
-              style: TextStyle(fontSize: 14),
+        return DataRow(
+          cells: [
+            DataCell(
+              Text(
+                questionData.question,
+                style: TextStyle(fontSize: 14),
+              ),
+              onTap: () {},
             ),
-          ),
-          DataCell(
-            Text(
-              questionData.dateAdded,
-              style: TextStyle(fontSize: 14),
+            DataCell(
+              Text(
+                questionData.dateAdded,
+                style: TextStyle(fontSize: 14),
+              ),
+              onTap: () {},
             ),
-          ),
-          DataCell(
-            Text(
-              questionData.approvalStatus,
-              style: TextStyle(fontSize: 14),
+            DataCell(
+              Text(
+                questionData.approvalStatus,
+                style: TextStyle(fontSize: 14),
+              ),
+              onTap: () {},
             ),
-          ),
-        ]);
+          ],
+        );
       }).toList(),
     );
   }
@@ -98,4 +103,16 @@ class QuestionData {
     required this.dateAdded,
     required this.approvalStatus,
   });
+
+  String get topic => '';
+
+  String get questionText => '';
+
+  get options => '';
+
+  int get correctAnswerIndex => 0;
+
+  Iterable get tags => [];
+
+  String get difficulty => '';
 }
