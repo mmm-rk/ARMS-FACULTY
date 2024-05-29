@@ -1,11 +1,11 @@
-import 'package:arms/Screens/Class_dartfiles/class_page.dart';
+import 'package:arms/Screens/Class_dartfiles/assessment_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_clicked_save.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
 import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
+import 'package:arms/Screens/Student_dartfiles/student_page.dart';
 import 'package:arms/Screens/Widgets/file_upload.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
-import 'package:arms/Screens/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class ClickedCreate extends StatefulWidget {
@@ -216,7 +216,7 @@ class _ClickedCreateState extends State<ClickedCreate> {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return const ClassPage();
+                            return const AssessmentPage();
                           },
                         ),
                       );
@@ -224,12 +224,12 @@ class _ClickedCreateState extends State<ClickedCreate> {
                   ),
                   SizedBox(height: 18),
                   IconButton(
-                    icon: Icon(Icons.settings),
+                    icon: Icon(Icons.credit_score_rounded),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return const SettingPage();
+                            return const StudentPage();
                           },
                         ),
                       );

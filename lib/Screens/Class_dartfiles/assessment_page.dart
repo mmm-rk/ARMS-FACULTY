@@ -1,20 +1,16 @@
-import 'package:arms/Screens/Class_dartfiles/class_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
-import 'package:arms/Screens/Question_dartfiles/addquestion_details.dart';
+import 'package:arms/Screens/Popups/create_assessment_dialog.dart';
 import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
+import 'package:arms/Screens/Student_dartfiles/student_page.dart';
+import 'package:arms/Screens/Tables/assessments_table.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
-import 'package:arms/Screens/settings_page.dart';
 import 'package:flutter/material.dart';
 
-class AddQuestion extends StatefulWidget {
-  const AddQuestion({super.key});
+class AssessmentPage extends StatelessWidget {
+  const AssessmentPage({super.key});
 
   @override
-  State<AddQuestion> createState() => _AddQuestionState();
-}
-
-class _AddQuestionState extends State<AddQuestion> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -64,13 +60,13 @@ class _AddQuestionState extends State<AddQuestion> {
                     children: [
                       Container(
                         width: 2300,
-                        height: 700,
+                        height: 620,
                         child: Stack(
                           children: [
                             Positioned(
                               child: Container(
                                 width: 2300,
-                                height: 700,
+                                height: 620,
                                 decoration: BoxDecoration(
                                   color: const Color.fromRGBO(208, 217, 211, 1),
                                   boxShadow: [
@@ -113,7 +109,7 @@ class _AddQuestionState extends State<AddQuestion> {
                                             ),
                                             SizedBox(width: 8),
                                             Text(
-                                              'Question Details',
+                                              'List of Assessments',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -135,8 +131,8 @@ class _AddQuestionState extends State<AddQuestion> {
                               top: 54,
                               child: Container(
                                   // Define your table container properties here
-                                  child: AddQuestionDetails
-                                      .AddQuestionDetails()), //Edit mo nalang sa pag display data
+                                  child:
+                                      AssessmentTable()), //Edit mo nalang sa pag display data
                             ),
                           ],
                         ),
@@ -149,37 +145,80 @@ class _AddQuestionState extends State<AddQuestion> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(width: 20),
+                      SizedBox(width: 8),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
+                          showDialog(
+                              context: context,
                               builder: (BuildContext context) {
-                                return const QuestionPage();
-                              },
-                            ),
-                          );
+                                return AssessmentDialog();
+                              });
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromRGBO(
-                              197, 55, 55, 1), // Set the background color
+                              65, 95, 76, 1), // Set the background color
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.backspace_rounded,
-                                color:
-                                    Colors.white), // Add icon before the text
-                            SizedBox(
-                                width: 8), // Add space between icon and text
+                            Icon(Icons.add, color: Colors.white),
+                            SizedBox(width: 8),
                             Text(
-                              'CANCEL',
+                              'CREATE',
                               style:
                                   TextStyle(fontSize: 16, color: Colors.white),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(width: 40),
+                      SizedBox(width: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Action for edit button
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(
+                              65, 95, 76, 1), // Set the background color
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.edit,
+                                color:
+                                    Colors.white), // Add icon before the text
+                            SizedBox(
+                                width: 8), // Add space between icon and text
+                            Text(
+                              'EDIT',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Action for post button
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(
+                              65, 95, 76, 1), // Set the background color
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.upload,
+                                color:
+                                    Colors.white), // Add icon before the text
+                            SizedBox(
+                                width: 8), // Add space between icon and text
+                            Text(
+                              'POST',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 40)
                     ],
                   ),
                 ),
@@ -245,25 +284,17 @@ class _AddQuestionState extends State<AddQuestion> {
                   ),
                   SizedBox(height: 18),
                   IconButton(
-                    icon: Icon(Icons.people),
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return const ClassPage();
-                          },
-                        ),
-                      );
-                    },
+                    icon: Icon(Icons.credit_score_rounded),
+                    onPressed: () {},
                   ),
                   SizedBox(height: 18),
                   IconButton(
-                    icon: Icon(Icons.settings),
+                    icon: Icon(Icons.supervised_user_circle_rounded),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return const SettingPage();
+                            return const StudentPage();
                           },
                         ),
                       );

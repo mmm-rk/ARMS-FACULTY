@@ -1,8 +1,8 @@
-import 'package:arms/Screens/Class_dartfiles/class_page.dart';
+import 'package:arms/Screens/Class_dartfiles/assessment_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
 import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
+import 'package:arms/Screens/Student_dartfiles/student_page.dart';
 import 'package:arms/Screens/home_page.dart';
-import 'package:arms/Screens/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class SideNavBar extends StatelessWidget {
@@ -89,9 +89,9 @@ class SideNavBar extends StatelessWidget {
           ),
           SizedBox(height: 18),
           ListTile(
-            leading: Icon(Icons.people), // Add the home icon here
+            leading: Icon(Icons.credit_score_rounded), // Add the home icon here
             title: Text(
-              'Class',
+              'Assessments',
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -100,7 +100,7 @@ class SideNavBar extends StatelessWidget {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return const ClassPage();
+                    return const AssessmentPage();
                   },
                 ),
               );
@@ -108,9 +108,10 @@ class SideNavBar extends StatelessWidget {
           ),
           SizedBox(height: 18),
           ListTile(
-            leading: Icon(Icons.settings), // Add the home icon here
+            leading: Icon(
+                Icons.supervised_user_circle_rounded), // Add the home icon here
             title: Text(
-              'Settings',
+              'Students',
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -119,7 +120,7 @@ class SideNavBar extends StatelessWidget {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return const SettingPage();
+                    return const StudentPage();
                   },
                 ),
               );

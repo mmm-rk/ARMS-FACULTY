@@ -1,8 +1,8 @@
-import 'package:arms/Screens/Class_dartfiles/class_page.dart';
+import 'package:arms/Screens/Class_dartfiles/assessment_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
 import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
+import 'package:arms/Screens/Student_dartfiles/student_page.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
-import 'package:arms/Screens/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -101,12 +101,12 @@ class HomePage extends StatelessWidget {
                     ),
                     SizedBox(height: 18),
                     IconButton(
-                      icon: Icon(Icons.people),
+                      icon: Icon(Icons.credit_score_rounded),
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return const ClassPage();
+                              return const AssessmentPage();
                             },
                           ),
                         );
@@ -114,12 +114,12 @@ class HomePage extends StatelessWidget {
                     ),
                     SizedBox(height: 18),
                     IconButton(
-                      icon: Icon(Icons.settings),
+                      icon: Icon(Icons.supervised_user_circle_rounded),
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return const SettingPage();
+                              return const StudentPage();
                             },
                           ),
                         );

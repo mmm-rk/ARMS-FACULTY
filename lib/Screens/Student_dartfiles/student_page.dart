@@ -1,14 +1,14 @@
+import 'package:arms/Screens/Class_dartfiles/assessment_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
-import 'package:arms/Screens/Popups/create_assessment_dialog.dart';
 import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
-import 'package:arms/Screens/Tables/assessments_table.dart';
+import 'package:arms/Screens/Student_dartfiles/addform_student.dart';
+import 'package:arms/Screens/Tables/student_table.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
-import 'package:arms/Screens/settings_page.dart';
 import 'package:flutter/material.dart';
 
-class ClassPage extends StatelessWidget {
-  const ClassPage({super.key});
+class StudentPage extends StatelessWidget {
+  const StudentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,7 @@ class ClassPage extends StatelessWidget {
                                             ),
                                             SizedBox(width: 8),
                                             Text(
-                                              'List of Assessments',
+                                              'List of Students',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -132,7 +132,7 @@ class ClassPage extends StatelessWidget {
                               child: Container(
                                   // Define your table container properties here
                                   child:
-                                      AssessmentTable()), //Edit mo nalang sa pag display data
+                                      StudentTable()), //Edit mo nalang sa pag display data
                             ),
                           ],
                         ),
@@ -148,11 +148,13 @@ class ClassPage extends StatelessWidget {
                       SizedBox(width: 8),
                       ElevatedButton(
                         onPressed: () {
-                          showDialog(
-                              context: context,
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
                               builder: (BuildContext context) {
-                                return AssessmentDialog();
-                              });
+                                return const AddStudent();
+                              },
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromRGBO(
@@ -163,7 +165,7 @@ class ClassPage extends StatelessWidget {
                             Icon(Icons.add, color: Colors.white),
                             SizedBox(width: 8),
                             Text(
-                              'CREATE',
+                              'ADD',
                               style:
                                   TextStyle(fontSize: 16, color: Colors.white),
                             ),
@@ -197,21 +199,21 @@ class ClassPage extends StatelessWidget {
                       SizedBox(width: 20),
                       ElevatedButton(
                         onPressed: () {
-                          // Action for post button
+                          // Action for delete button
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromRGBO(
-                              65, 95, 76, 1), // Set the background color
+                              197, 55, 55, 1), // Set the background color
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.upload,
+                            Icon(Icons.approval_outlined,
                                 color:
                                     Colors.white), // Add icon before the text
                             SizedBox(
                                 width: 8), // Add space between icon and text
                             Text(
-                              'POST',
+                              'DELETE',
                               style:
                                   TextStyle(fontSize: 16, color: Colors.white),
                             ),
@@ -284,17 +286,25 @@ class ClassPage extends StatelessWidget {
                   ),
                   SizedBox(height: 18),
                   IconButton(
-                    icon: Icon(Icons.people),
-                    onPressed: () {},
-                  ),
-                  SizedBox(height: 18),
-                  IconButton(
-                    icon: Icon(Icons.settings),
+                    icon: Icon(Icons.credit_score_rounded),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return const SettingPage();
+                            return const AssessmentPage();
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 18),
+                  IconButton(
+                    icon: Icon(Icons.supervised_user_circle_rounded),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return const StudentPage();
                           },
                         ),
                       );

@@ -1,14 +1,53 @@
 import 'package:arms/Screens/Class_dartfiles/assessment_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
-import 'package:arms/Screens/Question_dartfiles/addform_question.dart';
+import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
 import 'package:arms/Screens/Student_dartfiles/student_page.dart';
-import 'package:arms/Screens/Tables/questions_table.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class QuestionPage extends StatelessWidget {
-  const QuestionPage({super.key});
+class AddStudent extends StatefulWidget {
+  const AddStudent({super.key});
+
+  @override
+  State<AddStudent> createState() => _AddStudentState();
+}
+
+class _AddStudentState extends State<AddStudent> {
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _middleNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _idNumberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _birthdateController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData(
+            textTheme: TextTheme(
+              bodyLarge: TextStyle(fontSize: 16), // Adjust the font size here
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      setState(() {
+        _birthdateController.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,19 +93,19 @@ class QuestionPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.fromLTRB(93, 0, 36, 20),
+                  padding: EdgeInsets.fromLTRB(150, 0, 36, 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Container(
-                        width: 2300,
-                        height: 620,
+                        width: 800, // Adjusted width
+                        height: 700,
                         child: Stack(
                           children: [
                             Positioned(
                               child: Container(
-                                width: 2300,
-                                height: 620,
+                                width: 800,
+                                height: 700,
                                 decoration: BoxDecoration(
                                   color: const Color.fromRGBO(208, 217, 211, 1),
                                   boxShadow: [
@@ -82,7 +121,7 @@ class QuestionPage extends StatelessWidget {
                             ),
                             Positioned(
                               child: Container(
-                                width: 2300,
+                                width: 800,
                                 height: 54,
                                 child: Stack(
                                   children: [
@@ -90,7 +129,7 @@ class QuestionPage extends StatelessWidget {
                                       left: 0,
                                       top: 0,
                                       child: Container(
-                                        width: 2300,
+                                        width: 800,
                                         height: 54,
                                         decoration: BoxDecoration(
                                             color:
@@ -109,7 +148,7 @@ class QuestionPage extends StatelessWidget {
                                             ),
                                             SizedBox(width: 8),
                                             Text(
-                                              'List of Questions',
+                                              'Student Information',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -130,9 +169,109 @@ class QuestionPage extends StatelessWidget {
                             Positioned(
                               top: 54,
                               child: Container(
-                                  // Define your table container properties here
-                                  child:
-                                      QuestionTable()), //Edit mo nalang sa pag display data
+                                padding: EdgeInsets.all(16.0),
+                                width: 800,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextField(
+                                      controller: _firstNameController,
+                                      decoration: InputDecoration(
+                                          labelText: 'First Name',
+                                          labelStyle: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black)),
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    SizedBox(height: 10),
+                                    TextField(
+                                      controller: _middleNameController,
+                                      decoration: InputDecoration(
+                                          labelText: 'Middle Name',
+                                          labelStyle: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black)),
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    SizedBox(height: 10),
+                                    TextField(
+                                      controller: _lastNameController,
+                                      decoration: InputDecoration(
+                                          labelText: 'Last Name',
+                                          labelStyle: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black)),
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    SizedBox(height: 10),
+                                    TextField(
+                                      controller: _idNumberController,
+                                      decoration: InputDecoration(
+                                          labelText: 'ID Number',
+                                          labelStyle: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black)),
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    SizedBox(height: 10),
+                                    TextField(
+                                      controller: _emailController,
+                                      decoration: InputDecoration(
+                                          labelText: 'Email',
+                                          labelStyle: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black)),
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    SizedBox(height: 10),
+                                    TextField(
+                                      controller: _phoneNumberController,
+                                      decoration: InputDecoration(
+                                          labelText: 'Phone Number',
+                                          labelStyle: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black)),
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    SizedBox(height: 10),
+                                    TextField(
+                                      controller: _birthdateController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Birthdate',
+                                        labelStyle: TextStyle(fontSize: 16),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(Icons.calendar_today),
+                                          onPressed: () {
+                                            _selectDate(context);
+                                          },
+                                        ),
+                                      ),
+                                      style: TextStyle(fontSize: 16),
+                                      readOnly: true,
+                                    ),
+                                    SizedBox(height: 10),
+                                    TextField(
+                                      controller: _genderController,
+                                      decoration: InputDecoration(
+                                          labelText: 'Gender',
+                                          labelStyle: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black)),
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    SizedBox(height: 10),
+                                    TextField(
+                                      controller: _addressController,
+                                      decoration: InputDecoration(
+                                          labelText: 'Address',
+                                          labelStyle: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black)),
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -145,13 +284,13 @@ class QuestionPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(width: 8),
+                      SizedBox(width: 20),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (BuildContext context) {
-                                return const AddQuestion();
+                                return const StudentPage();
                               },
                             ),
                           );
@@ -162,8 +301,11 @@ class QuestionPage extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.add, color: Colors.white),
-                            SizedBox(width: 8),
+                            Icon(Icons.person_add_alt,
+                                color:
+                                    Colors.white), // Add icon before the text
+                            SizedBox(
+                                width: 8), // Add space between icon and text
                             Text(
                               'ADD',
                               style:
@@ -172,55 +314,7 @@ class QuestionPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(width: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Action for edit button
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(
-                              65, 95, 76, 1), // Set the background color
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.edit,
-                                color:
-                                    Colors.white), // Add icon before the text
-                            SizedBox(
-                                width: 8), // Add space between icon and text
-                            Text(
-                              'EDIT',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Action for delete button
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(
-                              197, 55, 55, 1), // Set the background color
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.approval_outlined,
-                                color:
-                                    Colors.white), // Add icon before the text
-                            SizedBox(
-                                width: 8), // Add space between icon and text
-                            Text(
-                              'DELETE',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 40)
+                      SizedBox(width: 40),
                     ],
                   ),
                 ),
@@ -274,11 +368,19 @@ class QuestionPage extends StatelessWidget {
                   SizedBox(height: 18),
                   IconButton(
                     icon: Icon(Icons.account_balance_wallet_rounded),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return const QuestionPage();
+                          },
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(height: 18),
                   IconButton(
-                    icon: Icon(Icons.credit_score_rounded),
+                    icon: Icon(Icons.people),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
@@ -291,7 +393,7 @@ class QuestionPage extends StatelessWidget {
                   ),
                   SizedBox(height: 18),
                   IconButton(
-                    icon: Icon(Icons.supervised_user_circle_rounded),
+                    icon: Icon(Icons.credit_score_rounded),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(

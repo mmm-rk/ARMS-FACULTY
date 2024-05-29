@@ -1,16 +1,20 @@
 import 'package:arms/Screens/Class_dartfiles/assessment_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
-import 'package:arms/Screens/Question_dartfiles/addform_question.dart';
+import 'package:arms/Screens/Question_dartfiles/addquestion_details.dart';
+import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
 import 'package:arms/Screens/Student_dartfiles/student_page.dart';
-import 'package:arms/Screens/Tables/questions_table.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
 import 'package:flutter/material.dart';
 
-class QuestionPage extends StatelessWidget {
-  const QuestionPage({super.key});
+class AddQuestion extends StatefulWidget {
+  const AddQuestion({super.key});
 
   @override
+  State<AddQuestion> createState() => _AddQuestionState();
+}
+
+class _AddQuestionState extends State<AddQuestion> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -60,13 +64,13 @@ class QuestionPage extends StatelessWidget {
                     children: [
                       Container(
                         width: 2300,
-                        height: 620,
+                        height: 700,
                         child: Stack(
                           children: [
                             Positioned(
                               child: Container(
                                 width: 2300,
-                                height: 620,
+                                height: 700,
                                 decoration: BoxDecoration(
                                   color: const Color.fromRGBO(208, 217, 211, 1),
                                   boxShadow: [
@@ -109,7 +113,7 @@ class QuestionPage extends StatelessWidget {
                                             ),
                                             SizedBox(width: 8),
                                             Text(
-                                              'List of Questions',
+                                              'Question Details',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: Colors.white,
@@ -131,8 +135,8 @@ class QuestionPage extends StatelessWidget {
                               top: 54,
                               child: Container(
                                   // Define your table container properties here
-                                  child:
-                                      QuestionTable()), //Edit mo nalang sa pag display data
+                                  child: AddQuestionDetails
+                                      .AddQuestionDetails()), //Edit mo nalang sa pag display data
                             ),
                           ],
                         ),
@@ -145,61 +149,16 @@ class QuestionPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(width: 8),
+                      SizedBox(width: 20),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (BuildContext context) {
-                                return const AddQuestion();
+                                return const QuestionPage();
                               },
                             ),
                           );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(
-                              65, 95, 76, 1), // Set the background color
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.add, color: Colors.white),
-                            SizedBox(width: 8),
-                            Text(
-                              'ADD',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Action for edit button
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(
-                              65, 95, 76, 1), // Set the background color
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.edit,
-                                color:
-                                    Colors.white), // Add icon before the text
-                            SizedBox(
-                                width: 8), // Add space between icon and text
-                            Text(
-                              'EDIT',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Action for delete button
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromRGBO(
@@ -207,20 +166,20 @@ class QuestionPage extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.approval_outlined,
+                            Icon(Icons.backspace_rounded,
                                 color:
                                     Colors.white), // Add icon before the text
                             SizedBox(
                                 width: 8), // Add space between icon and text
                             Text(
-                              'DELETE',
+                              'CANCEL',
                               style:
                                   TextStyle(fontSize: 16, color: Colors.white),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(width: 40)
+                      SizedBox(width: 40),
                     ],
                   ),
                 ),
@@ -274,11 +233,19 @@ class QuestionPage extends StatelessWidget {
                   SizedBox(height: 18),
                   IconButton(
                     icon: Icon(Icons.account_balance_wallet_rounded),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return const QuestionPage();
+                          },
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(height: 18),
                   IconButton(
-                    icon: Icon(Icons.credit_score_rounded),
+                    icon: Icon(Icons.people),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
@@ -291,7 +258,7 @@ class QuestionPage extends StatelessWidget {
                   ),
                   SizedBox(height: 18),
                   IconButton(
-                    icon: Icon(Icons.supervised_user_circle_rounded),
+                    icon: Icon(Icons.credit_score_rounded),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
