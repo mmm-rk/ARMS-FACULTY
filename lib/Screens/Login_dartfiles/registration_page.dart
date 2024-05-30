@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:arms/controllers/authentication.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -25,6 +27,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  final AuthenticationController _authenticationController =
+      Get.put(AuthenticationController());
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -46,37 +51,6 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         _birthdateController.text = DateFormat('yyyy-MM-dd').format(picked);
       });
-    }
-  }
-
-  Future<void> _registerFaculty() async {
-    final url = Uri.parse(
-        'https://yourapi.com/register'); // Replace with your API endpoint
-
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'first_name': _firstNameController.text,
-        'middle_name': _middleNameController.text,
-        'last_name': _lastNameController.text,
-        'id_number': _idNumberController.text,
-        'email': _emailController.text,
-        'phone_number': _phoneNumberController.text,
-        'birthdate': _birthdateController.text,
-        'gender': _genderController.text,
-        'address': _addressController.text,
-        'password': _passwordController.text,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      // Handle successful response
-      print('Registration successful');
-      // Navigate to another page if necessary
-    } else {
-      // Handle error response
-      print('Registration failed');
     }
   }
 
@@ -190,29 +164,51 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 25),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: ElevatedButton(
-                          onPressed: _registerFaculty,
-                          style: ElevatedButton.styleFrom(
-                            shadowColor: Colors.black,
-                            elevation: 10,
-                            backgroundColor:
-                                const Color.fromRGBO(67, 104, 80, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 25),
-                            child: Text(
-                              'Sign Up',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: 'Poppins',
-                                color: Color.fromRGBO(235, 235, 235, 1),
-                              ),
-                            ),
-                          ),
-                        ),
+                        child: Obx(() {
+                          return _authenticationController.isLoading.value
+                              ? const CircularProgressIndicator()
+                              : ElevatedButton(
+                                  onPressed: () async {
+                                    await _authenticationController.register(
+                                      first_name:
+                                          _firstNameController.text.trim(),
+                                      middle_name:
+                                          _middleNameController.text.trim(),
+                                      last_name:
+                                          _lastNameController.text.trim(),
+                                      id_number:
+                                          _idNumberController.text.trim(),
+                                      email: _emailController.text.trim(),
+                                      phone_number:
+                                          _phoneNumberController.text.trim(),
+                                      birth_date:
+                                          _birthdateController.text.trim(),
+                                      gender: _genderController.text.trim(),
+                                      address: _addressController.text.trim(),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shadowColor: Colors.black,
+                                    elevation: 10,
+                                    backgroundColor:
+                                        const Color.fromRGBO(67, 104, 80, 1),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 25),
+                                    child: Text(
+                                      'Sign Up',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontFamily: 'Poppins',
+                                        color: Color.fromRGBO(235, 235, 235, 1),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                        }),
                       ),
                       SizedBox(height: 30),
                       Row(
@@ -269,7 +265,7 @@ class _RegisterPageState extends State<RegisterPage> {
       obscureText: obscureText,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: Colors.black,
         labelText: label,
         labelStyle: TextStyle(fontSize: 14),
         enabledBorder: OutlineInputBorder(
