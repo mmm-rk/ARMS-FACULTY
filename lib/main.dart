@@ -1,4 +1,4 @@
-import 'package:arms/Screens/home_page.dart';
+import 'package:arms/Screens/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -27,6 +27,6 @@ class MyApp extends StatelessWidget {
             home: child,
           );
         },
-        child: HomePage());
+        child: WelcomePage());
   }
 }

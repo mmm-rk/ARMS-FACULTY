@@ -287,13 +287,13 @@ class _AddStudentState extends State<AddStudent> {
                       SizedBox(width: 20),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return const StudentPage();
-                              },
-                            ),
-                          );
+                          // Navigator.of(context).pushReplacement(
+                          //   MaterialPageRoute(
+                          //     builder: (BuildContext context) {
+                          //       return const StudentPage();
+                          //     },
+                          //   ),
+                          // );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromRGBO(
@@ -380,7 +380,7 @@ class _AddStudentState extends State<AddStudent> {
                   ),
                   SizedBox(height: 18),
                   IconButton(
-                    icon: Icon(Icons.people),
+                    icon: Icon(Icons.credit_score_rounded),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
@@ -393,7 +393,7 @@ class _AddStudentState extends State<AddStudent> {
                   ),
                   SizedBox(height: 18),
                   IconButton(
-                    icon: Icon(Icons.credit_score_rounded),
+                    icon: Icon(Icons.supervised_user_circle_rounded),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
