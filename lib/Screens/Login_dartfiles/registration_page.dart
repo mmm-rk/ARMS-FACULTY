@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:arms/controllers/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import 'login_page.dart';

@@ -1,7 +1,9 @@
 import 'package:arms/Screens/Login_dartfiles/registration_page.dart';
 import 'package:arms/Screens/home_page.dart';
+import 'package:arms/controllers/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,6 +16,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _idNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  final AuthenticationController _authenticationController =
+      Get.put(AuthenticationController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,38 +146,42 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return HomePage();
-                                },
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shadowColor: Colors.black,
-                            elevation: 10,
-                            backgroundColor:
-                                const Color.fromRGBO(67, 104, 80, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(90, 25, 90, 25),
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromRGBO(235, 235, 235, 1),
-                              ),
-                            ),
-                          ),
-                        ),
+                        child: Obx(() {
+                          return _authenticationController.isLoading.value
+                              ? Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : ElevatedButton(
+                                  onPressed: () async {
+                                    await _authenticationController.login(
+                                      idNumber: _idNumberController.text.trim(),
+                                      password: _passwordController.text.trim(),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shadowColor: Colors.black,
+                                    elevation: 10,
+                                    backgroundColor:
+                                        const Color.fromRGBO(67, 104, 80, 1),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.fromLTRB(90, 25, 90, 25),
+                                    child: Text(
+                                      'Login',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w600,
+                                        color: Color.fromRGBO(235, 235, 235, 1),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                        }),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
