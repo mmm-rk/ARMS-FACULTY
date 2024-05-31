@@ -1,5 +1,6 @@
 import 'package:arms/Screens/Class_dartfiles/assessment_page.dart';
 import 'package:arms/Screens/LDP_dartfiles/ldp_page.dart';
+import 'package:arms/Screens/Login_dartfiles/login_page.dart';
 import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
 import 'package:arms/Screens/Student_dartfiles/student_page.dart';
 import 'package:arms/Screens/home_page.dart';
@@ -121,6 +122,25 @@ class SideNavBar extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (BuildContext context) {
                     return const StudentPage();
+                  },
+                ),
+              );
+            },
+          ),
+          SizedBox(height: 530),
+          ListTile(
+            leading: Icon(Icons.logout), // Add the home icon here
+            title: Text(
+              'Logout',
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return const LoginPage();
                   },
                 ),
               );

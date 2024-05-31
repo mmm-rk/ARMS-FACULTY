@@ -71,13 +71,6 @@ class _AddStudentState extends State<AddStudent> {
                 // Handle notification icon click
               },
             ),
-            SizedBox(width: 5),
-            IconButton(
-              icon: Icon(Icons.chat),
-              onPressed: () {
-                // Handle chat icon click
-              },
-            ),
             SizedBox(width: 13),
             CircleAvatar(
               backgroundImage: AssetImage('assets/images/userpic.png'),
@@ -93,18 +86,18 @@ class _AddStudentState extends State<AddStudent> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.fromLTRB(150, 0, 36, 20),
+                  padding: EdgeInsets.fromLTRB(100, 0, 36, 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Container(
-                        width: 800, // Adjusted width
+                        width: 2300, // Adjusted width
                         height: 700,
                         child: Stack(
                           children: [
                             Positioned(
                               child: Container(
-                                width: 800,
+                                width: 2300,
                                 height: 700,
                                 decoration: BoxDecoration(
                                   color: const Color.fromRGBO(208, 217, 211, 1),
@@ -121,7 +114,7 @@ class _AddStudentState extends State<AddStudent> {
                             ),
                             Positioned(
                               child: Container(
-                                width: 800,
+                                width: 2300,
                                 height: 54,
                                 child: Stack(
                                   children: [
@@ -129,7 +122,7 @@ class _AddStudentState extends State<AddStudent> {
                                       left: 0,
                                       top: 0,
                                       child: Container(
-                                        width: 800,
+                                        width: 2300,
                                         height: 54,
                                         decoration: BoxDecoration(
                                             color:
@@ -170,7 +163,7 @@ class _AddStudentState extends State<AddStudent> {
                               top: 54,
                               child: Container(
                                 padding: EdgeInsets.all(16.0),
-                                width: 800,
+                                width: 1200,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

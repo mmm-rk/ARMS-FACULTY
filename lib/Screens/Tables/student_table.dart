@@ -41,66 +41,54 @@ class _StudentTableState extends State<StudentTable> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 850,
+      width: 1200,
       height: 600,
       padding: EdgeInsets.all(16.0),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: DataTable(
-          columnSpacing: 20, // Adjust the spacing between columns
+          columnSpacing: 90, // Adjust the spacing between columns
           columns: [
             DataColumn(
               label: Text(
-                'FIRST NAME',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              ),
-            ),
-            DataColumn(
-              label: Text(
-                'MIDDLE NAME',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              ),
-            ),
-            DataColumn(
-              label: Text(
-                'LAST NAME',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                'FULL NAME',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
             DataColumn(
               label: Text(
                 'ID NUMBER',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
             DataColumn(
               label: Text(
                 'EMAIL',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
             DataColumn(
               label: Text(
                 'PHONE NUMBER',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
             DataColumn(
               label: Text(
                 'BIRTHDATE',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
             DataColumn(
               label: Text(
                 'GENDER',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
             DataColumn(
               label: Text(
                 'ADDRESS',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -109,19 +97,7 @@ class _StudentTableState extends State<StudentTable> {
               cells: [
                 DataCell(
                   Text(
-                    student.firstName,
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ),
-                DataCell(
-                  Text(
-                    student.middleName,
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ),
-                DataCell(
-                  Text(
-                    student.lastName,
+                    '${student.firstName} ${student.middleName} ${student.lastName}',
                     style: TextStyle(fontSize: 14),
                   ),
                 ),

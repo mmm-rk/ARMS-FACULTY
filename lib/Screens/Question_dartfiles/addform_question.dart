@@ -36,13 +36,6 @@ class _AddQuestionState extends State<AddQuestion> {
                 // Handle notification icon click
               },
             ),
-            SizedBox(width: 5),
-            IconButton(
-              icon: Icon(Icons.chat),
-              onPressed: () {
-                // Handle chat icon click
-              },
-            ),
             SizedBox(width: 13),
             CircleAvatar(
               backgroundImage: AssetImage('assets/images/userpic.png'),
@@ -141,45 +134,6 @@ class _AddQuestionState extends State<AddQuestion> {
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(60, 0, 0, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(width: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return const QuestionPage();
-                              },
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(
-                              197, 55, 55, 1), // Set the background color
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.backspace_rounded,
-                                color:
-                                    Colors.white), // Add icon before the text
-                            SizedBox(
-                                width: 8), // Add space between icon and text
-                            Text(
-                              'CANCEL',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 40),
                     ],
                   ),
                 ),

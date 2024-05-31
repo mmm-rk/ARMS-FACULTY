@@ -22,7 +22,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _birthdateController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
 
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
@@ -58,18 +57,13 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Stack(
         children: [
           // Background Image
-          Image.asset(
-            'assets/images/forgotpassbg.png',
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            fit: BoxFit.fill,
-          ),
+          Container(color: Color.fromRGBO(208, 217, 211, 1)),
           // Registration Form
-          SingleChildScrollView(
+          Center(
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: 211,
                 ),
                 Container(
                   padding: EdgeInsets.all(20),
@@ -153,59 +147,77 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 15),
                       _buildTextField(
                           controller: _addressController, label: 'Address'),
-                      SizedBox(height: 15),
-                      _buildTextField(
-                          controller: _passwordController,
-                          label: 'Password',
-                          obscureText: true),
                       SizedBox(height: 25),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Obx(() {
-                          return _authenticationController.isLoading.value
-                              ? const CircularProgressIndicator()
-                              : ElevatedButton(
-                                  onPressed: () async {
-                                    await _authenticationController.register(
-                                      first_name:
-                                          _firstNameController.text.trim(),
-                                      middle_name:
-                                          _middleNameController.text.trim(),
-                                      last_name:
-                                          _lastNameController.text.trim(),
-                                      id_number:
-                                          _idNumberController.text.trim(),
-                                      email: _emailController.text.trim(),
-                                      phone_number:
-                                          _phoneNumberController.text.trim(),
-                                      birth_date:
-                                          _birthdateController.text.trim(),
-                                      gender: _genderController.text.trim(),
-                                      address: _addressController.text.trim(),
-                                    );
-                                  },
+                        child: Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Obx(() {
+                                return _authenticationController.isLoading.value
+                                    ? Padding(
+                                        padding: EdgeInsets.only(
+                                            top:
+                                                50), // Adjust the top padding as needed
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : SizedBox(
+                                        height:
+                                            86); // Hides the indicator when not loading
+                              }),
+                            ),
+                            Center(
+                              child: Container(
+                                width: 400, // Fixed width of the container
+                                height: 50, // Fixed height of the container
+                                child: ElevatedButton(
+                                  onPressed: _authenticationController
+                                          .isLoading.value
+                                      ? null
+                                      : () async {
+                                          await _authenticationController
+                                              .register(
+                                            first_name: _firstNameController
+                                                .text
+                                                .trim(),
+                                            middle_name: _middleNameController
+                                                .text
+                                                .trim(),
+                                            last_name:
+                                                _lastNameController.text.trim(),
+                                            id_number:
+                                                _idNumberController.text.trim(),
+                                            email: _emailController.text.trim(),
+                                            phone_number: _phoneNumberController
+                                                .text
+                                                .trim(),
+                                            birth_date: _birthdateController
+                                                .text
+                                                .trim(),
+                                            gender:
+                                                _genderController.text.trim(),
+                                            address:
+                                                _addressController.text.trim(),
+                                          );
+                                        },
                                   style: ElevatedButton.styleFrom(
-                                    shadowColor: Colors.black,
-                                    elevation: 10,
-                                    backgroundColor:
-                                        const Color.fromRGBO(67, 104, 80, 1),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
+                                    backgroundColor: Color.fromRGBO(67, 104, 80,
+                                        1), // Change the background color here
+                                  ),
+                                  child: Text(
+                                    'Sign Up',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontFamily: 'Poppins',
+                                      color: Color.fromRGBO(235, 235, 235, 1),
                                     ),
                                   ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 25),
-                                    child: Text(
-                                      'Sign Up',
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        fontFamily: 'Poppins',
-                                        color: Color.fromRGBO(235, 235, 235, 1),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                        }),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(height: 30),
                       Row(
@@ -262,7 +274,7 @@ class _RegisterPageState extends State<RegisterPage> {
       obscureText: obscureText,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.black,
+        fillColor: const Color.fromARGB(255, 255, 255, 255),
         labelText: label,
         labelStyle: TextStyle(fontSize: 14),
         enabledBorder: OutlineInputBorder(

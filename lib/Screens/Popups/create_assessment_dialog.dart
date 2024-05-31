@@ -312,15 +312,29 @@ class _AssessmentDialogState extends State<AssessmentDialog> {
                             ],
                           ),
                           child: Center(
-                            child: Text(
-                              'GENERATE',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontFamily: 'Open Sans',
-                                fontWeight: FontWeight.w600,
-                              ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons
+                                      .upload_rounded, // Replace with your desired icon
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                                SizedBox(
+                                    width:
+                                        8), // Adjust the spacing between icon and text
+                                Text(
+                                  'GENERATE',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

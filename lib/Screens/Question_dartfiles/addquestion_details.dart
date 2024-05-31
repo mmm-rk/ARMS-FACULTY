@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,7 +18,8 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
   final TextEditingController _newTagController = TextEditingController();
   final List<TextEditingController> _optionControllers =
       List.generate(4, (_) => TextEditingController());
-  int _correctAnswerIndex = 0;
+  final TextEditingController _answerController = TextEditingController();
+  String _correctAnswerText = '';
   String _selectedDifficulty = 'Easy';
   List<String> _tags = [];
   final List<String> _predefinedTags = ['Taxation'];
@@ -29,7 +31,7 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
         'questionText': _questionController.text,
         'options':
             _optionControllers.map((controller) => controller.text).toList(),
-        'correctAnswerIndex': _correctAnswerIndex,
+        'correctAnswerIndex': _correctAnswerText,
         'tags': _tags.toList(),
         'difficulty': _selectedDifficulty,
       };
@@ -140,7 +142,6 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
             // Level of Difficulty
             Positioned(
               left: 520,
-              top: 0,
               child: Text(
                 'Level of Difficulty',
                 style: TextStyle(
@@ -155,10 +156,9 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
               left: 520,
               top: 38,
               child: Container(
-                width: 299,
+                width: 270,
                 height: 50,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+                padding: const EdgeInsets.fromLTRB(15, 0, 0, 25),
                 decoration: ShapeDecoration(
                   color: Color(0xFFE9F3ED),
                   shape: RoundedRectangleBorder(
@@ -190,12 +190,63 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
               ),
             ),
 
+            // Correct Answer Selection
+            Positioned(
+              left: 820,
+              child: Container(
+                width: 840,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Select Correct Answer',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      width: 299,
+                      height: 50,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: ShapeDecoration(
+                        color: Color(0xFFE9F3ED),
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(width: 1, color: Color(0xFF808080)),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: TextField(
+                        controller: _answerController,
+                        decoration: InputDecoration(
+                          hintText: 'Enter Correct Answer',
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 9),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _correctAnswerText = value;
+                          });
+                        },
+                        keyboardType: TextInputType
+                            .text, // Adjust keyboard type as needed
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             // Question
             Positioned(
               left: 0,
               top: 94,
               child: Container(
-                width: 840,
+                width: 1200,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -210,7 +261,7 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
                     ),
                     const SizedBox(height: 8),
                     Container(
-                      width: 840,
+                      width: 1200,
                       height: 100,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 9),
@@ -267,7 +318,7 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
                     const SizedBox(height: 8),
                     for (int i = 0; i < 4; i++)
                       Container(
-                        width: 840,
+                        width: 1200,
                         height: 50,
                         margin: const EdgeInsets.only(bottom: 8),
                         padding: const EdgeInsets.symmetric(
@@ -302,73 +353,37 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
               ),
             ),
 
-            // Correct Answer Selection
+            //Cancel Button
             Positioned(
-              left: 0,
-              top: 500,
-              child: Container(
-                width: 840,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Select Correct Answer',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.bold,
-                      ),
+              left: 500,
+              top: 540,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return const QuestionPage();
+                      },
                     ),
-                    const SizedBox(height: 8),
-                    Container(
-                      width: 299,
-                      height: 42,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 9),
-                      decoration: ShapeDecoration(
-                        color: Color(0xFFE9F3ED),
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1, color: Color(0xFF808080)),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: DropdownButtonFormField<int>(
-                        isExpanded: true,
-                        value: _correctAnswerIndex,
-                        decoration: InputDecoration.collapsed(hintText: ''),
-                        items: List.generate(
-                            4,
-                            (index) => DropdownMenuItem(
-                                  value: index,
-                                  child: Text(
-                                    'Option ${index + 1}',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                )),
-                        onChanged: (int? newValue) {
-                          setState(() {
-                            _correctAnswerIndex = newValue!;
-                          });
-                        },
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Please select the correct answer';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
+                  );
+                },
+                icon: Icon(Icons.backspace_rounded, color: Colors.white),
+                label: Text(
+                  'CANCEL',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromRGBO(197, 55, 55, 1),
                 ),
               ),
             ),
 
-            // Save Button
+            // Create Button
             Positioned(
-              left: 730,
+              left: 620,
               top: 540,
               child: ElevatedButton.icon(
                 onPressed: _saveQuestion,

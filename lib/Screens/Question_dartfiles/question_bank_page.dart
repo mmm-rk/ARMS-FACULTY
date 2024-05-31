@@ -32,13 +32,6 @@ class QuestionPage extends StatelessWidget {
                 // Handle notification icon click
               },
             ),
-            SizedBox(width: 5),
-            IconButton(
-              icon: Icon(Icons.chat),
-              onPressed: () {
-                // Handle chat icon click
-              },
-            ),
             SizedBox(width: 13),
             CircleAvatar(
               backgroundImage: AssetImage('assets/images/userpic.png'),
