@@ -51,7 +51,7 @@ class StudentPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 2300,
                         height: 620,
                         child: Stack(
@@ -62,7 +62,7 @@ class StudentPage extends StatelessWidget {
                                 height: 620,
                                 decoration: BoxDecoration(
                                   color: const Color.fromRGBO(208, 217, 211, 1),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Color(0x3F000000),
                                       blurRadius: 4,

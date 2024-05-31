@@ -1,5 +1,4 @@
 import 'package:arms/Screens/Login_dartfiles/registration_page.dart';
-import 'package:arms/Screens/home_page.dart';
 import 'package:arms/controllers/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,16 +65,16 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(height: 15),
                     TextField(
+                      controller: _idNumberController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
                         labelText: 'ID Number',
                         labelStyle: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromRGBO(0, 0, 0, 0.473),
-                        ),
+                            fontSize: 20,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(0, 0, 0, 0.473)),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             width: 2,
@@ -90,10 +90,11 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
                     SizedBox(height: 15),
                     TextField(
+                      controller: _passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                         filled: true,
@@ -120,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
                     SizedBox(height: 16),
                     Align(
@@ -141,37 +142,41 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return HomePage();
-                              },
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.black,
-                          elevation: 10,
-                          backgroundColor: const Color.fromRGBO(67, 104, 80, 1),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(90, 25, 90, 10),
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(235, 235, 235, 1),
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: Obx(() {
+                        return _authenticationController.isLoading.value
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : ElevatedButton(
+                                onPressed: () async {
+                                  await _authenticationController.login(
+                                    idNumber: _idNumberController.text,
+                                    password: _passwordController.text,
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shadowColor: Colors.black,
+                                  elevation: 10,
+                                  backgroundColor:
+                                      const Color.fromRGBO(67, 104, 80, 1),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(90, 25, 90, 10),
+                                  child: Text(
+                                    'Login',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(235, 235, 235, 1),
+                                    ),
+                                  ),
+                                ),
+                              );
+                      }),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
