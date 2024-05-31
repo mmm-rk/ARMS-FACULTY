@@ -1,4 +1,4 @@
-import 'package:arms/controllers/student_model.dart';
+import 'package:arms/controllers/studentController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

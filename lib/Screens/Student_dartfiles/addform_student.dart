@@ -4,7 +4,9 @@ import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
 import 'package:arms/Screens/Student_dartfiles/student_page.dart';
 import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
+import 'package:arms/controllers/studentController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AddStudent extends StatefulWidget {
@@ -24,6 +26,8 @@ class _AddStudentState extends State<AddStudent> {
   final TextEditingController _birthdateController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
+
+  final StudentController _studentController = Get.find<StudentController>();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -174,7 +178,8 @@ class _AddStudentState extends State<AddStudent> {
                                           labelStyle: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black)),
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black),
                                     ),
                                     SizedBox(height: 10),
                                     TextField(
@@ -184,7 +189,8 @@ class _AddStudentState extends State<AddStudent> {
                                           labelStyle: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black)),
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black),
                                     ),
                                     SizedBox(height: 10),
                                     TextField(
@@ -194,7 +200,8 @@ class _AddStudentState extends State<AddStudent> {
                                           labelStyle: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black)),
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black),
                                     ),
                                     SizedBox(height: 10),
                                     TextField(
@@ -204,7 +211,8 @@ class _AddStudentState extends State<AddStudent> {
                                           labelStyle: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black)),
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black),
                                     ),
                                     SizedBox(height: 10),
                                     TextField(
@@ -214,7 +222,8 @@ class _AddStudentState extends State<AddStudent> {
                                           labelStyle: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black)),
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black),
                                     ),
                                     SizedBox(height: 10),
                                     TextField(
@@ -224,7 +233,8 @@ class _AddStudentState extends State<AddStudent> {
                                           labelStyle: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black)),
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black),
                                     ),
                                     SizedBox(height: 10),
                                     TextField(
@@ -239,7 +249,8 @@ class _AddStudentState extends State<AddStudent> {
                                           },
                                         ),
                                       ),
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black),
                                       readOnly: true,
                                     ),
                                     SizedBox(height: 10),
@@ -250,7 +261,8 @@ class _AddStudentState extends State<AddStudent> {
                                           labelStyle: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black)),
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black),
                                     ),
                                     SizedBox(height: 10),
                                     TextField(
@@ -260,7 +272,8 @@ class _AddStudentState extends State<AddStudent> {
                                           labelStyle: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black)),
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -279,14 +292,26 @@ class _AddStudentState extends State<AddStudent> {
                     children: [
                       SizedBox(width: 20),
                       ElevatedButton(
-                        onPressed: () {
-                          // Navigator.of(context).pushReplacement(
-                          //   MaterialPageRoute(
-                          //     builder: (BuildContext context) {
-                          //       return const StudentPage();
-                          //     },
-                          //   ),
-                          // );
+                        onPressed: () async {
+                          await _studentController.addStudent(
+                            firstName: _firstNameController.text.trim(),
+                            middleName: _middleNameController.text.trim(),
+                            lastName: _lastNameController.text.trim(),
+                            idNumber: _idNumberController.text.trim(),
+                            email: _emailController.text.trim(),
+                            phoneNumber: _phoneNumberController.text.trim(),
+                            birthDate: _birthdateController.text.trim(),
+                            gender: _genderController.text.trim(),
+                            address: _addressController.text.trim(),
+                          );
+                          _studentController.getAllStudents();
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return const StudentPage();
+                              },
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromRGBO(

@@ -1,5 +1,6 @@
 import 'package:arms/Screens/home_page.dart';
 import 'package:arms/Screens/welcome_page.dart';
+import 'package:arms/controllers/studentController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart'; // Import GetX package
@@ -8,8 +9,9 @@ import 'package:path_provider/path_provider.dart'; // Import path_provider packa
 
 void main() async {
   WidgetsFlutterBinding
-      .ensureInitialized(); // Ensure all plugins are initialized
+      .ensureInitialized(); // Ensure all plugins are initialized'
   await GetStorage.init(); // Initialize GetStorage
+  Get.put(StudentController()); // Initialize StudentController
   runApp(const MyApp());
 }
 
