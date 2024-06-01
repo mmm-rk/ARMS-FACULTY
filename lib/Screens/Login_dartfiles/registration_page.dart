@@ -1,6 +1,5 @@
 import 'package:arms/controllers/authentication.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -21,11 +20,12 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _birthdateController = TextEditingController();
-  final TextEditingController _genderController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
 
   final AuthenticationController _authenticationController =
       Get.put(AuthenticationController());
+
+  String? _selectedGender; // Define a variable for the selected gender
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -61,220 +61,253 @@ class _RegisterPageState extends State<RegisterPage> {
           Container(color: Color.fromRGBO(208, 217, 211, 1)),
           // Registration Form
           Center(
-            child: SingleChildScrollView(
-              //padding: EdgeInsets.only(bottom: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40),
-                      ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  height: 10,
+                ),
+                Container(
+                  padding: EdgeInsets.all(25),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          'Registration',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 24,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Registration',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF436850),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      _buildTextField(
+                          controller: _firstNameController,
+                          label: 'First Name'),
+                      SizedBox(height: 15),
+                      _buildTextField(
+                          controller: _middleNameController,
+                          label: 'Middle Name'),
+                      SizedBox(height: 15),
+                      _buildTextField(
+                          controller: _lastNameController, label: 'Last Name'),
+                      SizedBox(height: 15),
+                      _buildTextField(
+                          controller: _idNumberController, label: 'ID Number'),
+                      SizedBox(height: 15),
+                      _buildTextField(
+                          controller: _emailController, label: 'Email'),
+                      SizedBox(height: 15),
+                      _buildTextField(
+                          controller: _phoneNumberController,
+                          label: 'Phone Number'),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: _birthdateController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          labelText: 'Birthdate',
+                          labelStyle:
+                              TextStyle(fontSize: 14, fontFamily: 'Poppins'),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.calendar_today),
+                            onPressed: () {
+                              _selectDate(context);
+                            },
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: Colors.black26,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: Colors.black26,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        style: TextStyle(
+                            fontSize: 14,
                             fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF436850),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        _buildTextField(
-                            controller: _firstNameController,
-                            label: 'First Name'),
-                        SizedBox(height: 15),
-                        _buildTextField(
-                            controller: _middleNameController,
-                            label: 'Middle Name'),
-                        SizedBox(height: 15),
-                        _buildTextField(
-                            controller: _lastNameController,
-                            label: 'Last Name'),
-                        SizedBox(height: 15),
-                        _buildTextField(
-                            controller: _idNumberController,
-                            label: 'ID Number'),
-                        SizedBox(height: 15),
-                        _buildTextField(
-                            controller: _emailController, label: 'Email'),
-                        SizedBox(height: 15),
-                        _buildTextField(
-                            controller: _phoneNumberController,
-                            label: 'Phone Number'),
-                        SizedBox(height: 15),
-                        TextField(
-                          controller: _birthdateController,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            labelText: 'Birthdate',
-                            labelStyle:
-                                TextStyle(fontSize: 14, fontFamily: 'Poppins'),
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.calendar_today),
-                              onPressed: () {
-                                _selectDate(context);
-                              },
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: Colors.black26,
+                            color: Colors.black),
+                        readOnly: true,
+                      ),
+                      SizedBox(height: 15),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                        child: Container(
+                          height: 50,
+                          child: DropdownButtonFormField<String>(
+                            value: _selectedGender,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                _selectedGender = newValue;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              labelText: 'Gender',
+                              labelStyle: TextStyle(
+                                  fontSize: 16, fontFamily: 'Poppins'),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Colors.black26,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 1,
-                                color: Colors.black26,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Colors.black26,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
-                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                          ),
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Poppins',
-                              color: Colors.black),
-                          readOnly: true,
-                        ),
-                        SizedBox(height: 15),
-                        _buildTextField(
-                            controller: _genderController, label: 'Gender'),
-                        SizedBox(height: 15),
-                        _buildTextField(
-                            controller: _addressController, label: 'Address'),
-                        SizedBox(height: 25),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: Obx(() {
-                                  return _authenticationController
-                                          .isLoading.value
-                                      ? Padding(
-                                          padding: EdgeInsets.only(
-                                              top:
-                                                  50), // Adjust the top padding as needed
-                                          child: CircularProgressIndicator(),
-                                        )
-                                      : SizedBox(
-                                          height:
-                                              86); // Hides the indicator when not loading
-                                }),
-                              ),
-                              Center(
-                                child: Container(
-                                  width: 400, // Fixed width of the container
-                                  height: 50, // Fixed height of the container
-                                  child: ElevatedButton(
-                                    onPressed: _authenticationController
-                                            .isLoading.value
-                                        ? null
-                                        : () async {
-                                            await _authenticationController
-                                                .register(
-                                              first_name: _firstNameController
-                                                  .text
-                                                  .trim(),
-                                              middle_name: _middleNameController
-                                                  .text
-                                                  .trim(),
-                                              last_name: _lastNameController
-                                                  .text
-                                                  .trim(),
-                                              id_number: _idNumberController
-                                                  .text
-                                                  .trim(),
-                                              email:
-                                                  _emailController.text.trim(),
-                                              phone_number:
-                                                  _phoneNumberController.text
-                                                      .trim(),
-                                              birth_date: _birthdateController
-                                                  .text
-                                                  .trim(),
-                                              gender:
-                                                  _genderController.text.trim(),
-                                              address: _addressController.text
-                                                  .trim(),
-                                            );
-                                          },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color.fromRGBO(
-                                          67,
-                                          104,
-                                          80,
-                                          1), // Change the background color here
-                                    ),
-                                    child: Text(
-                                      'Sign Up',
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        fontFamily: 'Poppins',
-                                        color: Color.fromRGBO(235, 235, 235, 1),
-                                      ),
-                                    ),
+                            items: <String>['Male', 'Female']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(
+                                    fontSize: 16, // Reduced font size
+                                    fontFamily: 'Poppins',
                                   ),
                                 ),
-                              ),
-                            ],
+                              );
+                            }).toList(),
                           ),
                         ),
-                        SizedBox(height: 30),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                      SizedBox(height: 15),
+                      _buildTextField(
+                          controller: _addressController, label: 'Address'),
+                      SizedBox(height: 25),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Stack(
                           children: [
-                            Text(
-                              'Do you already have an Account?',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w400,
-                                color: Color.fromRGBO(0, 0, 0, 1),
-                              ),
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Obx(() {
+                                return _authenticationController.isLoading.value
+                                    ? Padding(
+                                        padding: EdgeInsets.only(
+                                            top:
+                                                50), // Adjust the top padding as needed
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : SizedBox(
+                                        height:
+                                            86); // Hides the indicator when not loading
+                              }),
                             ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()),
-                                );
-                              },
-                              child: Text(
-                                'Login Now!',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontStyle: FontStyle.italic,
-                                  color: Color.fromRGBO(67, 104, 80, 1),
+                            Center(
+                              child: Container(
+                                width: 400, // Fixed width of the container
+                                height: 60, // Fixed height of the container
+                                child: ElevatedButton(
+                                  onPressed: _authenticationController
+                                          .isLoading.value
+                                      ? null
+                                      : () async {
+                                          await _authenticationController
+                                              .register(
+                                            first_name: _firstNameController
+                                                .text
+                                                .trim(),
+                                            middle_name: _middleNameController
+                                                .text
+                                                .trim(),
+                                            last_name:
+                                                _lastNameController.text.trim(),
+                                            id_number:
+                                                _idNumberController.text.trim(),
+                                            email: _emailController.text.trim(),
+                                            phone_number: _phoneNumberController
+                                                .text
+                                                .trim(),
+                                            birth_date: _birthdateController
+                                                .text
+                                                .trim(),
+                                            gender: _selectedGender ?? '',
+                                            address:
+                                                _addressController.text.trim(),
+                                          );
+                                        },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color.fromRGBO(67, 104, 80,
+                                        1), // Change the background color here
+                                  ),
+                                  child: Text(
+                                    'Sign Up',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontFamily: 'Poppins',
+                                      color: Color.fromRGBO(235, 235, 235, 1),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Do you already have an Account?',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w400,
+                              color: Color.fromRGBO(0, 0, 0, 1),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()),
+                              );
+                            },
+                            child: Text(
+                              'Login Now!',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Poppins',
+                                fontStyle: FontStyle.italic,
+                                color: Color.fromRGBO(67, 104, 80, 1),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
@@ -293,7 +326,7 @@ class _RegisterPageState extends State<RegisterPage> {
         filled: true,
         fillColor: const Color.fromARGB(255, 255, 255, 255),
         labelText: label,
-        labelStyle: TextStyle(fontSize: 14),
+        labelStyle: TextStyle(fontSize: 16),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             width: 1,
@@ -309,7 +342,7 @@ class _RegisterPageState extends State<RegisterPage> {
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
-      style: TextStyle(fontSize: 14, color: Colors.black),
+      style: TextStyle(fontSize: 16, color: Colors.black),
     );
   }
 }

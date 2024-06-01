@@ -53,13 +53,13 @@ class StudentPage extends StatelessWidget {
                     children: [
                       SizedBox(
                         width: 2300,
-                        height: 620,
+                        height: 800,
                         child: Stack(
                           children: [
                             Positioned(
                               child: Container(
                                 width: 2300,
-                                height: 620,
+                                height: 800,
                                 decoration: BoxDecoration(
                                   color: const Color.fromRGBO(208, 217, 211, 1),
                                   boxShadow: const [

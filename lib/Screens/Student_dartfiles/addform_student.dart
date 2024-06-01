@@ -24,8 +24,9 @@ class _AddStudentState extends State<AddStudent> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _birthdateController = TextEditingController();
-  final TextEditingController _genderController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
+
+  String? _selectedGender; // Variable to hold selected gender
 
   final StudentController _studentController = Get.find<StudentController>();
 
@@ -171,75 +172,35 @@ class _AddStudentState extends State<AddStudent> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    TextField(
-                                      controller: _firstNameController,
-                                      decoration: InputDecoration(
-                                          labelText: 'First Name',
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black)),
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black),
-                                    ),
+                                    _buildTextField(
+                                        controller: _firstNameController,
+                                        label: 'First Name'),
                                     SizedBox(height: 10),
-                                    TextField(
-                                      controller: _middleNameController,
-                                      decoration: InputDecoration(
-                                          labelText: 'Middle Name',
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black)),
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black),
-                                    ),
+                                    _buildTextField(
+                                        controller: _middleNameController,
+                                        label: 'Middle Name'),
                                     SizedBox(height: 10),
-                                    TextField(
-                                      controller: _lastNameController,
-                                      decoration: InputDecoration(
-                                          labelText: 'Last Name',
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black)),
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black),
-                                    ),
+                                    _buildTextField(
+                                        controller: _lastNameController,
+                                        label: 'Last Name'),
                                     SizedBox(height: 10),
-                                    TextField(
-                                      controller: _idNumberController,
-                                      decoration: InputDecoration(
-                                          labelText: 'ID Number',
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black)),
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black),
-                                    ),
+                                    _buildTextField(
+                                        controller: _idNumberController,
+                                        label: 'ID Number'),
                                     SizedBox(height: 10),
-                                    TextField(
-                                      controller: _emailController,
-                                      decoration: InputDecoration(
-                                          labelText: 'Email',
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black)),
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black),
-                                    ),
+                                    _buildTextField(
+                                        controller: _emailController,
+                                        label: 'Email'),
                                     SizedBox(height: 10),
-                                    TextField(
-                                      controller: _phoneNumberController,
-                                      decoration: InputDecoration(
-                                          labelText: 'Phone Number',
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black)),
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black),
-                                    ),
+                                    _buildTextField(
+                                        controller: _phoneNumberController,
+                                        label: 'Phone Number'),
                                     SizedBox(height: 10),
                                     TextField(
                                       controller: _birthdateController,
                                       decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.white,
                                         labelText: 'Birthdate',
                                         labelStyle: TextStyle(fontSize: 16),
                                         suffixIcon: IconButton(
@@ -248,33 +209,86 @@ class _AddStudentState extends State<AddStudent> {
                                             _selectDate(context);
                                           },
                                         ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black26,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.black26,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
                                       ),
                                       style: TextStyle(
                                           fontSize: 16, color: Colors.black),
                                       readOnly: true,
                                     ),
                                     SizedBox(height: 10),
-                                    TextField(
-                                      controller: _genderController,
-                                      decoration: InputDecoration(
-                                          labelText: 'Gender',
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black)),
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0.0),
+                                      child: Container(
+                                        height: 50,
+                                        child: DropdownButtonFormField<String>(
+                                          value: _selectedGender,
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              _selectedGender = newValue;
+                                            });
+                                          },
+                                          decoration: InputDecoration(
+                                            filled: true,
+                                            fillColor: Colors.white,
+                                            labelText: 'Gender',
+                                            labelStyle: TextStyle(
+                                                fontSize: 16,
+                                                fontFamily: 'Poppins'),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                width: 1,
+                                                color: Colors.black26,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                width: 1,
+                                                color: Colors.black26,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                          ),
+                                          items: <String>['Male', 'Female']
+                                              .map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(
+                                                value,
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      16, // Reduced font size
+                                                  fontFamily: 'Poppins',
+                                                ),
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
                                     ),
                                     SizedBox(height: 10),
-                                    TextField(
-                                      controller: _addressController,
-                                      decoration: InputDecoration(
-                                          labelText: 'Address',
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black)),
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black),
-                                    ),
+                                    _buildTextField(
+                                        controller: _addressController,
+                                        label: 'Address'),
                                   ],
                                 ),
                               ),
@@ -301,7 +315,7 @@ class _AddStudentState extends State<AddStudent> {
                             email: _emailController.text.trim(),
                             phoneNumber: _phoneNumberController.text.trim(),
                             birthDate: _birthdateController.text.trim(),
-                            gender: _genderController.text.trim(),
+                            gender: _selectedGender ?? '',
                             address: _addressController.text.trim(),
                           );
                           _studentController.getAllStudents();
@@ -325,7 +339,7 @@ class _AddStudentState extends State<AddStudent> {
                             SizedBox(
                                 width: 8), // Add space between icon and text
                             Text(
-                              'ADD',
+                              'ADD STUDENT',
                               style:
                                   TextStyle(fontSize: 16, color: Colors.white),
                             ),
@@ -429,6 +443,35 @@ class _AddStudentState extends State<AddStudent> {
         ],
       ),
       drawer: SideNavBar(),
+    );
+  }
+
+  // Helper method to build TextFields with borders
+  Widget _buildTextField(
+      {required TextEditingController controller, required String label}) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.white,
+        labelText: label,
+        labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black26,
+            width: 1.0,
+          ),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black26,
+            width: 1.0,
+          ),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+      style: TextStyle(fontSize: 16, color: Colors.black),
     );
   }
 }

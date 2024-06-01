@@ -199,7 +199,7 @@ class _AddQuestionState extends State<AddQuestion> {
                   ),
                   SizedBox(height: 18),
                   IconButton(
-                    icon: Icon(Icons.people),
+                    icon: Icon(Icons.credit_score_rounded),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
@@ -212,7 +212,7 @@ class _AddQuestionState extends State<AddQuestion> {
                   ),
                   SizedBox(height: 18),
                   IconButton(
-                    icon: Icon(Icons.credit_score_rounded),
+                    icon: Icon(Icons.supervised_user_circle_rounded),
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(

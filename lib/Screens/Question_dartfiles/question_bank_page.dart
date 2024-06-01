@@ -52,14 +52,14 @@ class QuestionPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Container(
-                        width: 2300,
-                        height: 620,
+                        width: 1250,
+                        height: 750,
                         child: Stack(
                           children: [
                             Positioned(
                               child: Container(
-                                width: 2300,
-                                height: 620,
+                                width: 1250,
+                                height: 750,
                                 decoration: BoxDecoration(
                                   color: const Color.fromRGBO(208, 217, 211, 1),
                                   boxShadow: [
