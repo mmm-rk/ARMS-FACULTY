@@ -18,7 +18,6 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
   final List<TextEditingController> _optionControllers = [];
   final TextEditingController _answerController = TextEditingController();
   String _correctAnswerText = '';
-  String _selectedDifficulty = 'Easy';
   List<String> _tags = [];
   final List<String> _predefinedTags = ['Taxation'];
 
@@ -71,7 +70,7 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
-      width: 1200,
+      width: 1250,
       height: 620,
       child: Form(
         key: _formKey,
@@ -95,7 +94,7 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
               left: 0,
               top: 38,
               child: Container(
-                width: 500,
+                width: 860,
                 height: 50,
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 9),
                 decoration: ShapeDecoration(
@@ -147,60 +146,9 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
               ),
             ),
 
-            // Level of Difficulty
-            Positioned(
-              left: 520,
-              child: Text(
-                'Level of Difficulty',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Positioned(
-              left: 520,
-              top: 38,
-              child: Container(
-                width: 270,
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(15, 0, 0, 25),
-                decoration: ShapeDecoration(
-                  color: Color(0xFFE9F3ED),
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1, color: Color(0xFF808080)),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                child: DropdownButtonFormField<String>(
-                  isExpanded: true,
-                  value: _selectedDifficulty,
-                  decoration: InputDecoration.collapsed(hintText: ''),
-                  items: <String>['Easy', 'Medium', 'Hard'].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedDifficulty = newValue!;
-                    });
-                  },
-                ),
-              ),
-            ),
-
             // Correct Answer Selection
             Positioned(
-              left: 820,
+              left: 900,
               child: Container(
                 width: 840,
                 child: Column(
@@ -311,7 +259,7 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
               top: 230,
               child: Container(
                 width: 1200,
-                height: 250,
+                height: 310,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -375,10 +323,19 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
                         },
                       ),
                     ),
-                    TextButton.icon(
-                      onPressed: _addOption,
-                      icon: Icon(Icons.add_circle, color: Colors.green),
-                      label: Text('Add Option'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton.icon(
+                          onPressed: _addOption,
+                          icon: Icon(Icons.add_circle,
+                              color: Color.fromRGBO(65, 95, 76, 1)),
+                          label: Text('Add Option',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color.fromRGBO(65, 95, 76, 1))),
+                        ),
+                      ],
                     ),
                   ],
                 ),
