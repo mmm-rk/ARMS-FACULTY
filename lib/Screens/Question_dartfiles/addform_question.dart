@@ -128,8 +128,8 @@ class _AddQuestionState extends State<AddQuestion> {
                               top: 54,
                               child: Container(
                                   // Define your table container properties here
-                                  child: AddQuestionDetails
-                                      .AddQuestionDetails()), //Edit mo nalang sa pag display data
+                                  child:
+                                      AddQuestionDetails()), //Edit mo nalang sa pag display data
                             ),
                           ],
                         ),

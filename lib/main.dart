@@ -1,5 +1,6 @@
 import 'package:arms/Screens/home_page.dart';
 import 'package:arms/Screens/welcome_page.dart';
+import 'package:arms/controllers/questionController.dart';
 import 'package:arms/controllers/studentController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,7 @@ void main() async {
       .ensureInitialized(); // Ensure all plugins are initialized'
   await GetStorage.init(); // Initialize GetStorage
   Get.put(StudentController()); // Initialize StudentController
+  Get.put(QuestionController()); // Initialize QuestionController
   runApp(const MyApp());
 }
 

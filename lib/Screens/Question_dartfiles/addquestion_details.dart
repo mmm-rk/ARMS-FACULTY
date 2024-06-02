@@ -1,11 +1,10 @@
-import 'dart:convert';
-
 import 'package:arms/Screens/Question_dartfiles/question_bank_page.dart';
+import 'package:arms/controllers/questionController.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 
 class AddQuestionDetails extends StatefulWidget {
-  const AddQuestionDetails.AddQuestionDetails({Key? key}) : super(key: key);
+  const AddQuestionDetails({Key? key}) : super(key: key);
 
   @override
   State<AddQuestionDetails> createState() => _AddQuestionDetailsState();
@@ -16,45 +15,55 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
   final TextEditingController _topicController = TextEditingController();
   final TextEditingController _questionController = TextEditingController();
   final TextEditingController _newTagController = TextEditingController();
-  final List<TextEditingController> _optionControllers =
-      List.generate(4, (_) => TextEditingController());
+  final List<TextEditingController> _optionControllers = [];
   final TextEditingController _answerController = TextEditingController();
   String _correctAnswerText = '';
   String _selectedDifficulty = 'Easy';
   List<String> _tags = [];
   final List<String> _predefinedTags = ['Taxation'];
 
-  Future<void> _saveQuestion() async {
-    if (_formKey.currentState!.validate()) {
-      final questionData = {
-        'topic': _topicController.text,
-        'questionText': _questionController.text,
-        'options':
-            _optionControllers.map((controller) => controller.text).toList(),
-        'correctAnswerIndex': _correctAnswerText,
-        'tags': _tags.toList(),
-        'difficulty': _selectedDifficulty,
-      };
+  final QuestionController questionController = Get.find<QuestionController>();
 
-      final response = await http.post(
-        Uri.parse('http://your_api_endpoint_here/questions'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(questionData),
-      );
+  @override
+  void initState() {
+    super.initState();
+    // Initialize with four option controllers
+    for (int i = 0; i < 4; i++) {
+      _optionControllers.add(TextEditingController());
+    }
+  }
 
-      if (response.statusCode == 200) {
-        // Successfully saved
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Question saved successfully')),
-        );
-      } else {
-        // Error occurred
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save question')),
-        );
+  @override
+  void dispose() {
+    _topicController.dispose();
+    _questionController.dispose();
+    _newTagController.dispose();
+    _answerController.dispose();
+    for (var controller in _optionControllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  void _addOption() {
+    setState(() {
+      _optionControllers.add(TextEditingController());
+    });
+  }
+
+  void _removeOption(int index) {
+    setState(() {
+      if (_optionControllers.length > 1) {
+        _optionControllers[index].dispose();
+        _optionControllers.removeAt(index);
       }
+    });
+  }
+
+  void _saveQuestion() {
+    if (_formKey.currentState!.validate()) {
+      // Save question logic here
+      // Gather data from controllers and send to your backend or perform any required action
     }
   }
 
@@ -62,7 +71,7 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
-      width: 2300,
+      width: 1200,
       height: 620,
       child: Form(
         key: _formKey,
@@ -105,6 +114,7 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
                           tag,
                           style: TextStyle(
                             fontSize: 15,
+                            color: Colors.black,
                           ),
                         ),
                         onDeleted: () {
@@ -126,9 +136,7 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
                             _newTagController.clear(); // Clear the text field
                           });
                         },
-                        style: TextStyle(
-                          fontSize: 15, // Adjust the font size as needed
-                        ),
+                        style: TextStyle(fontSize: 15, color: Colors.black),
                         decoration: InputDecoration(
                           hintText: 'Add Tag',
                         ),
@@ -302,7 +310,8 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
               left: 0,
               top: 230,
               child: Container(
-                width: 2300,
+                width: 1200,
+                height: 250,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -316,88 +325,110 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    for (int i = 0; i < 4; i++)
-                      Container(
-                        width: 1200,
-                        height: 50,
-                        margin: const EdgeInsets.only(bottom: 8),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 9),
-                        decoration: ShapeDecoration(
-                          color: Color(0xFFFFFFFF),
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                                width: 1, color: Colors.black.withOpacity(0.5)),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        child: TextFormField(
-                          controller: _optionControllers[i],
-                          style: TextStyle(
-                            fontSize: 15,
-                          ),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Enter answer option ${i + 1}',
-                            hintStyle: TextStyle(
-                              color: Color(0xFF808080),
-                              fontSize: 15,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: _optionControllers.length,
+                        itemBuilder: (context, i) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  width: 1200,
+                                  height: 50,
+                                  margin: const EdgeInsets.only(bottom: 8),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 9),
+                                  decoration: ShapeDecoration(
+                                    color: Color(0xFFFFFFFF),
+                                    shape: RoundedRectangleBorder(
+                                      side: BorderSide(
+                                          width: 1,
+                                          color: Colors.black.withOpacity(0.5)),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  child: TextFormField(
+                                    controller: _optionControllers[i],
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Enter answer option ${i + 1}',
+                                      hintStyle: TextStyle(
+                                        color: Color(0xFF808080),
+                                        fontSize: 15,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.remove_circle,
+                                    color: Colors.red),
+                                onPressed: () => _removeOption(i),
+                              ),
+                            ],
+                          );
+                        },
                       ),
+                    ),
+                    TextButton.icon(
+                      onPressed: _addOption,
+                      icon: Icon(Icons.add_circle, color: Colors.green),
+                      label: Text('Add Option'),
+                    ),
                   ],
                 ),
               ),
             ),
 
-            //Cancel Button
+            // Cancel and Create Buttons
             Positioned(
               left: 500,
               top: 540,
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return const QuestionPage();
-                      },
+              child: Row(
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return const QuestionPage();
+                          },
+                        ),
+                      );
+                    },
+                    icon: Icon(Icons.backspace_rounded, color: Colors.white),
+                    label: Text(
+                      'CANCEL',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
                     ),
-                  );
-                },
-                icon: Icon(Icons.backspace_rounded, color: Colors.white),
-                label: Text(
-                  'CANCEL',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(197, 55, 55, 1),
+                    ),
                   ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(197, 55, 55, 1),
-                ),
-              ),
-            ),
-
-            // Create Button
-            Positioned(
-              left: 620,
-              top: 540,
-              child: ElevatedButton.icon(
-                onPressed: _saveQuestion,
-                icon: Icon(Icons.add, color: Colors.white),
-                label: Text(
-                  'CREATE',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
+                  const SizedBox(width: 20),
+                  ElevatedButton.icon(
+                    onPressed: _saveQuestion,
+                    icon: Icon(Icons.add, color: Colors.white),
+                    label: Text(
+                      'CREATE',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(65, 95, 76, 1),
+                    ),
                   ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(65, 95, 76, 1),
-                ),
+                ],
               ),
             ),
           ],

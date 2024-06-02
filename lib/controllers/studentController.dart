@@ -108,6 +108,8 @@ class StudentController extends GetxController {
         );
         print(json.decode(response.body));
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }
