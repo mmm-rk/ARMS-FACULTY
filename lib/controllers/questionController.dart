@@ -11,6 +11,7 @@ class QuestionController extends GetxController {
   var questions = <Question>[].obs;
   final box = GetStorage();
 
+  @override
   void onInit() {
     getAllQuestions();
     super.onInit();
@@ -20,7 +21,6 @@ class QuestionController extends GetxController {
     try {
       isLoading(true);
 
-      // Fetch questions from the API
       var questionsResult = await getQuestions();
       if (questionsResult != null) {
         questions.assignAll(questionsResult);
@@ -32,7 +32,7 @@ class QuestionController extends GetxController {
     }
   }
 
-  Future getQuestions() async {
+  Future<List<Question>?> getQuestions() async {
     try {
       var response = await http.get(
         Uri.parse('${url}questions'),
@@ -43,8 +43,10 @@ class QuestionController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        var questionsData = json.decode(response.body)['questions'] as List;
-        return questionsData.map((e) => Question.fromJson(e)).toList();
+        var jsonResponse = json.decode(response.body);
+
+        var questionModel = QuestionModel.fromJson(jsonResponse);
+        return questionModel.questions;
       } else {
         print("Failed to load questions: ${response.body}");
         return [];
@@ -55,27 +57,29 @@ class QuestionController extends GetxController {
     }
   }
 
-  //Add a new Question
   Future addQuestion({
-    required String topic_name,
+    required String topicName,
     required String questionText,
-    required String options,
+    required List<String> options,
     required String correctAnswer,
   }) async {
     try {
       var data = {
-        'topic_name': topic_name,
+        'topic_name': topicName,
         'question_text': questionText,
-        'options': options,
-        'correct_answer': correctAnswer
+        'options': jsonEncode(options), // Encode options as JSON string
+        'correct_answer': correctAnswer,
       };
 
-      var response = await http.post(Uri.parse('${url}questionadd'),
-          headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ${box.read('token')}',
-          },
-          body: data);
+      var response = await http.post(
+        Uri.parse('${url}questionadd'),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${box.read('token')}',
+          'Content-Type': 'application/json', // Ensure content type is JSON
+        },
+        body: jsonEncode(data), // Encode the entire data as JSON
+      );
 
       if (response.statusCode == 200) {
         Get.snackbar(

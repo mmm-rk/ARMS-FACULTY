@@ -18,7 +18,6 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
   final List<TextEditingController> _optionControllers = [];
   final TextEditingController _answerController = TextEditingController();
   String _correctAnswerText = '';
-  List<String> _tags = [];
   final List<String> _predefinedTags = ['Taxation'];
 
   final QuestionController questionController = Get.find<QuestionController>();
@@ -57,13 +56,6 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
         _optionControllers.removeAt(index);
       }
     });
-  }
-
-  void _saveQuestion() {
-    if (_formKey.currentState!.validate()) {
-      // Save question logic here
-      // Gather data from controllers and send to your backend or perform any required action
-    }
   }
 
   @override
@@ -127,12 +119,12 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
                     Container(
                       width: 120, // Adjust the width as needed
                       child: TextField(
-                        controller: _newTagController,
+                        controller: _topicController,
                         onSubmitted: (value) {
                           setState(() {
                             _predefinedTags
                                 .add(value); // Add the new tag to the list
-                            _newTagController.clear(); // Clear the text field
+                            _topicController.clear(); // Clear the text field
                           });
                         },
                         style: TextStyle(fontSize: 15, color: Colors.black),
@@ -372,7 +364,48 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
                   ),
                   const SizedBox(width: 20),
                   ElevatedButton.icon(
-                    onPressed: _saveQuestion,
+                    onPressed: () async {
+                      List<String> options = _optionControllers
+                          .map((controller) => controller.text.trim())
+                          .where((option) =>
+                              option.isNotEmpty) // Filter out empty options
+                          .toList();
+
+                      if (options.isNotEmpty) {
+                        // Check if options list is not empty
+                        await questionController.addQuestion(
+                          topicName: _topicController.text.trim(),
+                          questionText: _questionController.text.trim(),
+                          options: options,
+                          correctAnswer: _correctAnswerText,
+                        );
+                        questionController.getQuestions();
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return const QuestionPage();
+                            },
+                          ),
+                        );
+                      } else {
+                        // Handle case where options list is empty
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text('Error'),
+                            content: Text('Please enter at least one option.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
                     icon: Icon(Icons.add, color: Colors.white),
                     label: Text(
                       'CREATE',
