@@ -7,9 +7,14 @@ import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
 import 'package:flutter/material.dart';
 
-class QuestionPage extends StatelessWidget {
+class QuestionPage extends StatefulWidget {
   const QuestionPage({super.key});
 
+  @override
+  _QuestionPageState createState() => _QuestionPageState();
+}
+
+class _QuestionPageState extends State<QuestionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,13 +57,13 @@ class QuestionPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Container(
-                        width: 1250,
+                        width: 2300,
                         height: 750,
                         child: Stack(
                           children: [
                             Positioned(
                               child: Container(
-                                width: 1250,
+                                width: 2300,
                                 height: 750,
                                 decoration: BoxDecoration(
                                   color: const Color.fromRGBO(208, 217, 211, 1),

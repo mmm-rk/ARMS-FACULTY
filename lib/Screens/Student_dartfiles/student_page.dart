@@ -7,9 +7,14 @@ import 'package:arms/Screens/Widgets/side_navbar.dart';
 import 'package:arms/Screens/home_page.dart';
 import 'package:flutter/material.dart';
 
-class StudentPage extends StatelessWidget {
+class StudentPage extends StatefulWidget {
   const StudentPage({super.key});
 
+  @override
+  _StudentPageState createState() => _StudentPageState();
+}
+
+class _StudentPageState extends State<StudentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,8 +129,7 @@ class StudentPage extends StatelessWidget {
                               top: 54,
                               child: Container(
                                   // Define your table container properties here
-                                  child:
-                                      StudentTable()), //Edit mo nalang sa pag display data
+                                  child: StudentTable()),
                             ),
                           ],
                         ),

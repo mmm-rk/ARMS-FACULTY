@@ -14,11 +14,10 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _topicController = TextEditingController();
   final TextEditingController _questionController = TextEditingController();
-  final TextEditingController _newTagController = TextEditingController();
   final List<TextEditingController> _optionControllers = [];
   final TextEditingController _answerController = TextEditingController();
   String _correctAnswerText = '';
-  final List<String> _predefinedTags = ['Taxation'];
+  String _selectedTopic = 'Financial Accounting';
 
   final QuestionController questionController = Get.find<QuestionController>();
 
@@ -35,7 +34,6 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
   void dispose() {
     _topicController.dispose();
     _questionController.dispose();
-    _newTagController.dispose();
     _answerController.dispose();
     for (var controller in _optionControllers) {
       controller.dispose();
@@ -96,44 +94,29 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                child: Wrap(
-                  spacing: 8,
-                  children: [
-                    ..._predefinedTags.map((tag) {
-                      return Chip(
-                        label: Text(
-                          tag,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                          ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: _selectedTopic,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedTopic = newValue!;
+                      });
+                    },
+                    items: <String>[
+                      'Financial Accounting',
+                      'Managerial Accounting',
+                      'Taxation',
+                      'Auditing'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(fontSize: 15, color: Colors.black),
                         ),
-                        onDeleted: () {
-                          setState(() {
-                            _predefinedTags.remove(tag);
-                          });
-                        },
                       );
                     }).toList(),
-                    // Input field for adding new chips
-                    Container(
-                      width: 120, // Adjust the width as needed
-                      child: TextField(
-                        controller: _topicController,
-                        onSubmitted: (value) {
-                          setState(() {
-                            _predefinedTags
-                                .add(value); // Add the new tag to the list
-                            _topicController.clear(); // Clear the text field
-                          });
-                        },
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                        decoration: InputDecoration(
-                          hintText: 'Add Tag',
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -179,8 +162,7 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
                             _correctAnswerText = value;
                           });
                         },
-                        keyboardType: TextInputType
-                            .text, // Adjust keyboard type as needed
+                        keyboardType: TextInputType.text,
                         style: TextStyle(fontSize: 15),
                       ),
                     ),
@@ -364,48 +346,7 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
                   ),
                   const SizedBox(width: 20),
                   ElevatedButton.icon(
-                    onPressed: () async {
-                      List<String> options = _optionControllers
-                          .map((controller) => controller.text.trim())
-                          .where((option) =>
-                              option.isNotEmpty) // Filter out empty options
-                          .toList();
-
-                      if (options.isNotEmpty) {
-                        // Check if options list is not empty
-                        await questionController.addQuestion(
-                          topicName: _topicController.text.trim(),
-                          questionText: _questionController.text.trim(),
-                          options: options,
-                          correctAnswer: _correctAnswerText,
-                        );
-                        questionController.getQuestions();
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return const QuestionPage();
-                            },
-                          ),
-                        );
-                      } else {
-                        // Handle case where options list is empty
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: Text('Error'),
-                            content: Text('Please enter at least one option.'),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text('OK'),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                    },
+                    onPressed: () {},
                     icon: Icon(Icons.add, color: Colors.white),
                     label: Text(
                       'CREATE',

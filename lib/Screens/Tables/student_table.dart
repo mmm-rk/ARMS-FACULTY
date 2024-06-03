@@ -23,168 +23,170 @@ class _StudentTableState extends State<StudentTable> {
           return Center(child: CircularProgressIndicator());
         }
 
-        return SingleChildScrollView(
+        return ListView(
           scrollDirection: Axis.vertical,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              columnSpacing: 90,
-              columns: [
-                DataColumn(
-                  label: Text(
-                    'FULL NAME',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+          children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                columnSpacing: 90,
+                columns: [
+                  DataColumn(
+                    label: Text(
+                      'FULL NAME',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-                DataColumn(
-                  label: Text(
-                    'ID NUMBER',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                  DataColumn(
+                    label: Text(
+                      'ID NUMBER',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-                DataColumn(
-                  label: Text(
-                    'EMAIL',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                  DataColumn(
+                    label: Text(
+                      'EMAIL',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-                DataColumn(
-                  label: Text(
-                    'PHONE NUMBER',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                  DataColumn(
+                    label: Text(
+                      'PHONE NUMBER',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-                DataColumn(
-                  label: Text(
-                    'BIRTHDATE',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                  DataColumn(
+                    label: Text(
+                      'BIRTHDATE',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-                DataColumn(
-                  label: Text(
-                    'GENDER',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                  DataColumn(
+                    label: Text(
+                      'GENDER',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-                DataColumn(
-                  label: Text(
-                    'ADDRESS',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                  DataColumn(
+                    label: Text(
+                      'ADDRESS',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
+                ],
+                rows: List.generate(
+                  widget.studentController.students.length,
+                  (index) {
+                    final student = widget.studentController.students[index];
+                    return DataRow(
+                      selected: _selectedIndex == index,
+                      onSelectChanged: (selected) {
+                        setState(() {
+                          _selectedIndex =
+                              selected != null ? (selected ? index : -1) : -1;
+                        });
+                      },
+                      cells: [
+                        DataCell(
+                          Text(
+                            '${student.firstName ?? ''} ${student.middleName ?? ''} ${student.lastName ?? ''}',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            student.idNumber ?? '',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            student.email ?? '',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            student.phoneNumber ?? '',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            student.birthDate != null
+                                ? '${student.birthDate!.year}-${student.birthDate!.month.toString().padLeft(2, '0')}-${student.birthDate!.day.toString().padLeft(2, '0')}'
+                                : '',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            student.gender ?? '',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            student.address ?? '',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
-              ],
-              rows: List.generate(
-                widget.studentController.students.length,
-                (index) {
-                  final student = widget.studentController.students[index];
-                  return DataRow(
-                    selected: _selectedIndex == index,
-                    onSelectChanged: (selected) {
-                      setState(() {
-                        _selectedIndex =
-                            selected != null ? (selected ? index : -1) : -1;
-                      });
-                    },
-                    cells: [
-                      DataCell(
-                        Text(
-                          '${student.firstName ?? ''} ${student.middleName ?? ''} ${student.lastName ?? ''}',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        Text(
-                          student.idNumber ?? '',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        Text(
-                          student.email ?? '',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        Text(
-                          student.phoneNumber ?? '',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        Text(
-                          student.birthDate != null
-                              ? '${student.birthDate!.year}-${student.birthDate!.month.toString().padLeft(2, '0')}-${student.birthDate!.day.toString().padLeft(2, '0')}'
-                              : '',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        Text(
-                          student.gender ?? '',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      DataCell(
-                        Text(
-                          student.address ?? '',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
               ),
             ),
-          ),
+          ],
         );
       }),
     );
