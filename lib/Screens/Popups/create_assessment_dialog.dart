@@ -287,10 +287,12 @@ class _AssessmentDialogState extends State<AssessmentDialog> {
                       child: GestureDetector(
                         onTap: () async {
                           await assessmentController.addAssessment(
-                            topics: _topics.join(
-                                ','), // Convert the list of topics to a comma-separated string (or any other delimiter of your choice
+                            topics:
+                                _topics, // Convert the list of topics to a comma-separated string (or any other delimiter of your choice
                             // Pass the list of topics
-                            questionCount: _numberOfItemsController.text.trim(),
+                            questionCount: int.parse(_numberOfItemsController
+                                .text
+                                .trim()), // Convert the string to an integer
                             name: _assessmentNameController.text.trim(),
                           );
                           assessmentController.getAssessments();

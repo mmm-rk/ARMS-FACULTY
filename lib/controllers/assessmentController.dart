@@ -58,13 +58,13 @@ class AssessmentController extends GetxController {
   }
 
   Future addAssessment({
-    required String topics, // Change the parameter type to List<String>
-    required String questionCount,
+    required List<String> topics,
+    required int questionCount,
     required String name,
   }) async {
     try {
       var data = {
-        'topic_name': topics, // Pass the list directly
+        'topic_name': topics,
         'question_count': questionCount,
         'name': name,
       };
@@ -73,9 +73,10 @@ class AssessmentController extends GetxController {
         Uri.parse('${url}generate-assessment'),
         headers: {
           'Accept': 'application/json',
+          'Content-Type': 'application/json',
           'Authorization': 'Bearer ${box.read('token')}',
         },
-        body: data,
+        body: jsonEncode(data),
       );
 
       if (response.statusCode == 201) {
@@ -88,14 +89,22 @@ class AssessmentController extends GetxController {
         );
         print(json.decode(response.body));
       } else {
+        var errorData = json.decode(response.body);
+        var errorMessage = errorData['message'];
+        var errorList = errorData['errors'];
+
+        String errorText = 'Error: $errorMessage\n';
+        for (var field in errorList.keys) {
+          errorText += '- $field: ${errorList[field]?.join(', ')}\n';
+        }
+
         Get.snackbar(
           'Error',
-          'Failed to add assessment',
+          errorText,
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-        print(json.decode(response.body));
       }
     } catch (e) {
       print('Error in adding assessment');
