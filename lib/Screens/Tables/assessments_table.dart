@@ -1,4 +1,6 @@
+import 'package:arms/controllers/assessmentController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AssessmentTable extends StatefulWidget {
   const AssessmentTable({Key? key}) : super(key: key);
@@ -8,105 +10,67 @@ class AssessmentTable extends StatefulWidget {
 }
 
 class _AssessmentTableState extends State<AssessmentTable> {
-  List<AssessmentData> _assessmentDataList = []; // List to hold assessment data
+  final AssessmentController assessmentController =
+      Get.put(AssessmentController());
+  int _selectedIndex = -1;
 
   @override
   void initState() {
     super.initState();
-    // You can fetch assessment data from API here and update _assessmentDataList
-    _fetchAssessmentData();
-  }
-
-  void _fetchAssessmentData() {
-    // Simulated fetching of assessment data from API
-    // This is where you would make your API call to get the assessment data
-    // For demonstration, I'm adding sample data here
-    setState(() {
-      _assessmentDataList = [
-        AssessmentData(
-          assessmentName: 'Sample Assessment 1',
-          creator: 'John Doe',
-          dateCreated: '2024-05-27',
-        ),
-        AssessmentData(
-          assessmentName: 'Sample Assessment 2',
-          creator: 'Jane Smith',
-          dateCreated: '2024-05-28',
-        ),
-        // Add more sample assessment data as needed
-      ];
-    });
+    assessmentController.getAllAssessments();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DataTable(
-      columnSpacing: 200, // Adjust the spacing between columns
-      columns: [
-        DataColumn(
-          label: Text(
-            'ASSESSMENT NAME',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-        ),
-        DataColumn(
-          label: Text(
-            'CREATED BY',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-        ),
-        DataColumn(
-          label: Text(
-            'DATE CREATED',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ],
-      rows: _assessmentDataList.map((assessmentData) {
-        return DataRow(
-          cells: [
-            DataCell(
-              Text(
-                assessmentData.assessmentName,
-                style: TextStyle(fontSize: 14),
-              ),
-              onTap: () {
-                // Add action for tapping on assessment
-              },
+    return Obx(() {
+      if (assessmentController.isLoading.value) {
+        return Center(child: CircularProgressIndicator());
+      }
+      return DataTable(
+        columnSpacing: 200, // Adjust the spacing between columns
+        columns: [
+          DataColumn(
+            label: Text(
+              'ASSESSMENT NAME',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
-            DataCell(
-              Text(
-                assessmentData.creator,
-                style: TextStyle(fontSize: 14),
-              ),
-              onTap: () {
-                // Add action for tapping on creator
-              },
+          ),
+          DataColumn(
+            label: Text(
+              'DATE CREATED',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
-            DataCell(
-              Text(
-                assessmentData.dateCreated,
-                style: TextStyle(fontSize: 14),
-              ),
-              onTap: () {
-                // Add action for tapping on date created
+          ),
+        ],
+        rows: List.generate(
+          assessmentController.assessments.length,
+          (index) {
+            final assessment = assessmentController.assessments[index];
+            return DataRow(
+              selected: _selectedIndex == index,
+              onSelectChanged: (selected) {
+                setState(() {
+                  _selectedIndex = selected != null && selected ? index : -1;
+                });
               },
-            ),
-          ],
-        );
-      }).toList(),
-    );
+              cells: [
+                DataCell(
+                  Text(
+                    assessment.name ?? '',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+                DataCell(
+                  Text(
+                    assessment.createdAt.toString(),
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+              ],
+            );
+          },
+        ).toList(),
+      );
+    });
   }
-}
-
-class AssessmentData {
-  final String assessmentName;
-  final String creator;
-  final String dateCreated;
-
-  AssessmentData({
-    required this.assessmentName,
-    required this.creator,
-    required this.dateCreated,
-  });
 }

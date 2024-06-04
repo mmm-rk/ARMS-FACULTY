@@ -1,4 +1,6 @@
+import 'package:arms/controllers/assessmentController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AssessmentDialog extends StatefulWidget {
   @override
@@ -14,20 +16,10 @@ class _AssessmentDialogState extends State<AssessmentDialog> {
 
   String _selectedDifficulty = 'Easy';
   final List<String> _difficultyLevels = ['Easy', 'Medium', 'Hard'];
-  List<String> _topics = [];
+  final List<String> _topics = [];
 
-  void _generateAssessment() {
-    final assessmentName = _assessmentNameController.text;
-    final numberOfItems = int.tryParse(_numberOfItemsController.text) ?? 0;
-    final difficulty = _selectedDifficulty;
-    final topics = _topics;
-
-    // Call the function to generate the assessment with these parameters
-    print('Assessment Name: $assessmentName');
-    print('Number of Items: $numberOfItems');
-    print('Difficulty: $difficulty');
-    print('Topics: $topics');
-  }
+  final AssessmentController assessmentController =
+      Get.find<AssessmentController>();
 
   @override
   Widget build(BuildContext context) {
@@ -293,7 +285,17 @@ class _AssessmentDialogState extends State<AssessmentDialog> {
                       left: 303,
                       top: 320,
                       child: GestureDetector(
-                        onTap: _generateAssessment,
+                        onTap: () async {
+                          await assessmentController.addAssessment(
+                            topics: _topics.join(
+                                ','), // Convert the list of topics to a comma-separated string (or any other delimiter of your choice
+                            // Pass the list of topics
+                            questionCount: _numberOfItemsController.text.trim(),
+                            name: _assessmentNameController.text.trim(),
+                          );
+                          assessmentController.getAssessments();
+                          Navigator.of(context).pop();
+                        },
                         child: Container(
                           width: 128,
                           height: 43,
@@ -322,8 +324,9 @@ class _AssessmentDialogState extends State<AssessmentDialog> {
                                   size: 20,
                                 ),
                                 SizedBox(
-                                    width:
-                                        8), // Adjust the spacing between icon and text
+                                  width:
+                                      8, // Adjust the spacing between icon and text
+                                ),
                                 Text(
                                   'GENERATE',
                                   textAlign: TextAlign.center,
