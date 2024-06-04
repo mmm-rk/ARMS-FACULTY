@@ -1,12 +1,9 @@
 import 'package:arms/Screens/home_page.dart';
 import 'package:arms/Screens/welcome_page.dart';
-import 'package:arms/controllers/questionController.dart';
-import 'package:arms/controllers/studentController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart'; // Import GetX package
 import 'package:get_storage/get_storage.dart';
-import 'package:path_provider/path_provider.dart'; // Import path_provider package
 
 void main() async {
   WidgetsFlutterBinding
