@@ -10,6 +10,12 @@ class StudentTable extends StatefulWidget {
 }
 
 class _StudentTableState extends State<StudentTable> {
+  @override
+  void initState() {
+    widget.studentController.getAllStudents();
+    super.initState();
+  }
+
   int _selectedIndex = -1;
 
   @override

@@ -12,8 +12,6 @@ void main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Ensure all plugins are initialized'
   await GetStorage.init(); // Initialize GetStorage
-  Get.put(StudentController()); // Initialize StudentController
-  Get.put(QuestionController()); // Initialize QuestionController
   runApp(const MyApp());
 }
 
