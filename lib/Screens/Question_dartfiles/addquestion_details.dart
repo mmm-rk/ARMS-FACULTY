@@ -12,7 +12,6 @@ class AddQuestionDetails extends StatefulWidget {
 
 class _AddQuestionDetailsState extends State<AddQuestionDetails> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _topicController = TextEditingController();
   final TextEditingController _questionController = TextEditingController();
   final List<TextEditingController> _optionControllers = [];
   final TextEditingController _answerController = TextEditingController();
@@ -32,7 +31,6 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
 
   @override
   void dispose() {
-    _topicController.dispose();
     _questionController.dispose();
     _answerController.dispose();
     for (var controller in _optionControllers) {
@@ -346,7 +344,53 @@ class _AddQuestionDetailsState extends State<AddQuestionDetails> {
                   ),
                   const SizedBox(width: 20),
                   ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () async {
+                      // Create a map for options with keys A, B, C, D...
+                      Map<String, String> options = {};
+                      String optionLabels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+                      for (int i = 0; i < _optionControllers.length; i++) {
+                        String optionText = _optionControllers[i].text.trim();
+                        if (optionText.isNotEmpty) {
+                          options[optionLabels[i]] = optionText;
+                        }
+                      }
+
+                      if (options.isNotEmpty) {
+                        // Check if options list is not empty
+                        await questionController.addQuestion(
+                          topicName: _selectedTopic,
+                          questionText: _questionController.text.trim(),
+                          options: options,
+                          correctAnswer: _correctAnswerText,
+                        );
+                        questionController.getQuestions();
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return const QuestionPage();
+                            },
+                          ),
+                        );
+                      } else {
+                        // Handle case where options list is empty
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text('Error'),
+                            content: Text('Please enter at least one option.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
                     icon: Icon(Icons.add, color: Colors.white),
                     label: Text(
                       'CREATE',

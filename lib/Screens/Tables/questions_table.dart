@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class QuestionTable extends StatefulWidget {
-  final QuestionController questionController = Get.put(QuestionController());
-
   @override
-  State<QuestionTable> createState() => _QuestionTableState();
+  _QuestionTableState createState() => _QuestionTableState();
 }
 
 class _QuestionTableState extends State<QuestionTable> {
+  final QuestionController _questionController = Get.put(QuestionController());
   int _selectedIndex = -1;
 
   @override
@@ -19,10 +18,9 @@ class _QuestionTableState extends State<QuestionTable> {
       height: 750,
       padding: EdgeInsets.all(16.0),
       child: Obx(() {
-        if (widget.questionController.isLoading.value) {
+        if (_questionController.isLoading.value) {
           return Center(child: CircularProgressIndicator());
         }
-
         return ListView(
           scrollDirection: Axis.vertical,
           children: [
@@ -60,9 +58,9 @@ class _QuestionTableState extends State<QuestionTable> {
                   ),
                 ],
                 rows: List.generate(
-                  widget.questionController.questions.length,
+                  _questionController.questions.length,
                   (index) {
-                    final question = widget.questionController.questions[index];
+                    final question = _questionController.questions[index];
                     return DataRow(
                       selected: _selectedIndex == index,
                       onSelectChanged: (selected) {
@@ -74,32 +72,29 @@ class _QuestionTableState extends State<QuestionTable> {
                       cells: [
                         DataCell(
                           Text(
-                            'LOREM IPSUM', //question.questionText ?? ''
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
+                            question.questionText ?? '',
+                            style: TextStyle(fontSize: 14),
                           ),
+                          onTap: () {},
                         ),
                         DataCell(
                           Text(
-                            'LOREM IPSUM', //question.dateAdded
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
+                            question.createdAt.toString(),
+                            style: TextStyle(fontSize: 14),
                           ),
+                          onTap: () {},
                         ),
                         DataCell(
                           Text(
-                            'LOREM IPSUM', //question.approvalStatus
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
+                            question.isApproved == 1 ? 'Approved' : 'Pending',
+                            style: TextStyle(fontSize: 14),
                           ),
+                          onTap: () {},
                         ),
                       ],
                     );
                   },
-                ),
+                ).toList(),
               ),
             ),
           ],

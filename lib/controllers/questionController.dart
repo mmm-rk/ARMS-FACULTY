@@ -60,14 +60,14 @@ class QuestionController extends GetxController {
   Future addQuestion({
     required String topicName,
     required String questionText,
-    required List<String> options,
+    required Map<String, String> options,
     required String correctAnswer,
   }) async {
     try {
       var data = {
         'topic_name': topicName,
         'question_text': questionText,
-        'options': jsonEncode(options), // Encode options as JSON string
+        'options': options, // Directly pass the options map
         'correct_answer': correctAnswer,
       };
 
@@ -81,7 +81,7 @@ class QuestionController extends GetxController {
         body: jsonEncode(data), // Encode the entire data as JSON
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         Get.snackbar(
           'Success',
           'Question added successfully',
