@@ -46,6 +46,7 @@ class QuestionController extends GetxController {
         var jsonResponse = json.decode(response.body);
 
         var questionModel = QuestionModel.fromJson(jsonResponse);
+        //print(jsonResponse);
         return questionModel.questions;
       } else {
         print("Failed to load questions: ${response.body}");

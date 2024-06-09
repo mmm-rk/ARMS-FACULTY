@@ -56,7 +56,7 @@ class _AssessmentTableState extends State<AssessmentTable> {
               cells: [
                 DataCell(
                   Text(
-                    assessment.name ?? '',
+                    assessment.name,
                     style: TextStyle(fontSize: 14),
                   ),
                 ),

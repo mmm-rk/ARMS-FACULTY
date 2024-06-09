@@ -8,14 +8,14 @@ class QuestionTable extends StatefulWidget {
 }
 
 class _QuestionTableState extends State<QuestionTable> {
+  final QuestionController _questionController = Get.put(QuestionController());
+  int _selectedIndex = -1;
+
   @override
   void initState() {
     _questionController.getAllQuestions();
     super.initState();
   }
-
-  final QuestionController _questionController = Get.put(QuestionController());
-  int _selectedIndex = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class _QuestionTableState extends State<QuestionTable> {
                       onSelectChanged: (selected) {
                         setState(() {
                           _selectedIndex =
-                              selected != null ? (selected ? index : -1) : -1;
+                              selected != null && selected ? index : -1;
                         });
                       },
                       cells: [

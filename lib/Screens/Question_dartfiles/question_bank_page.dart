@@ -58,13 +58,13 @@ class _QuestionPageState extends State<QuestionPage> {
                     children: [
                       Container(
                         width: 2300,
-                        height: 750,
+                        height: 790,
                         child: Stack(
                           children: [
                             Positioned(
                               child: Container(
                                 width: 2300,
-                                height: 750,
+                                height: 790,
                                 decoration: BoxDecoration(
                                   color: const Color.fromRGBO(208, 217, 211, 1),
                                   boxShadow: [
